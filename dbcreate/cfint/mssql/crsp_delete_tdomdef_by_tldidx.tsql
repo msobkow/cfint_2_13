@@ -1,0 +1,116 @@
+--
+--	@(#) dbcreate/cfint/mssql/crsp_delete_tdomdef_by_tldidx.tsql
+--
+--	com.github.msobkow.CFInt
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfinet213
+go
+
+create proc sp_delete_tdomdef_by_tldidx(
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argTenantId decimal(21,0),
+	@argTldId decimal(21,0) )
+as
+	declare @varTenantId CFINet213TenantIdGenSeq
+	declare @varId CFINet213TopDomainIdGen
+	declare @varRevision int
+	declare @retval int
+	declare cursNormaltdomdefTldIdx cursor local for
+		select
+			a107.tenantid as tenantid,
+			a107.id as id,
+			a107.revision as revision
+		from cfinet213..tdomdef as a107
+		where
+			a107.tenantid = @argTenantId
+			and a107.tldid = @argTldId
+	declare cursRestricttdomdefTldIdx cursor local for
+		select
+			a107.tenantid as tenantid,
+			a107.id as id,
+			a107.revision as revision
+		from cfinet213..tdomdef as a107
+		where
+			a107.tenantid = @argTenantId
+			and a107.tldid = @argTldId
+			and a107.tenantid = @secTenantId
+begin
+	exec sp_is_system_user @retval output, @argAuditUserId
+	if( @retval = 1 )
+	begin
+		open cursNormaltdomdefTldIdx
+		fetch next from cursNormaltdomdefTldIdx into
+				@varTenantId,
+				@varId,
+				@varRevision
+		while ( @@fetch_status = 0 )
+		begin
+				exec sp_delete_tdomdef @argAuditClusterId,
+						@argAuditUserId,
+						@argAuditSessionId,
+						@secClusterId,
+						@secTenantId,
+						@varTenantId,
+						@varId,
+						@varRevision
+			fetch next from cursNormaltdomdefTldIdx into
+				@varTenantId,
+				@varId,
+				@varRevision
+		end
+		close cursNormaltdomdefTldIdx
+		deallocate cursNormaltdomdefTldIdx
+	end
+	else begin
+		open cursRestricttdomdefTldIdx
+		fetch next from cursRestricttdomdefTldIdx into
+				@varTenantId,
+				@varId,
+				@varRevision
+		while ( @@fetch_status = 0 )
+		begin
+				exec sp_delete_tdomdef @argAuditClusterId,
+						@argAuditUserId,
+						@argAuditSessionId,
+						@secClusterId,
+						@secTenantId,
+						@varTenantId,
+						@varId,
+						@varRevision
+			fetch next from cursRestricttdomdefTldIdx into
+				@varTenantId,
+				@varId,
+				@varRevision
+		end
+		close cursRestricttdomdefTldIdx
+		deallocate cursRestricttdomdefTldIdx
+	end
+end
+go
+
+quit

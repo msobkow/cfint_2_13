@@ -1,0 +1,108 @@
+#pragma once
+
+// Description: C++18 DbIO interface for MimeType.
+
+/*
+ *	com.github.msobkow.CFInt
+ *
+ *	Copyright (c) 2020 Mark Stephen Sobkow
+ *	
+ *	This file is part of MSS Code Factory.
+ *	
+ *	Licensed under the Apache License, Version 2.0 (the "License");
+ *	you may not use this file except in compliance with the License.
+ *	You may obtain a copy of the License at
+ *	
+ *	    http://www.apache.org/licenses/LICENSE-2.0
+ *	
+ *	Unless required by applicable law or agreed to in writing, software
+ *	distributed under the License is distributed on an "AS IS" BASIS,
+ *	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *	See the License for the specific language governing permissions and
+ *	limitations under the License.
+ *	
+ *	Donations to support MSS Code Factory can be made at
+ *	https://www.paypal.com/paypalme2/MarkSobkow
+ *
+ *	Manufactured by MSS Code Factory 2.12
+ */
+
+
+#include <cflib/ICFLibPublic.hpp>
+#include <cfsec/CFSecAuthorization.hpp>
+#include <cfint/CFIntHPKey.hpp>
+#include <cfint/CFIntMimeTypeBuff.hpp>
+#include <cfint/CFIntMimeTypePKey.hpp>
+#include <cfint/CFIntMimeTypeHBuff.hpp>
+#include <cfint/CFIntMimeTypeHPKey.hpp>
+#include <cfint/CFIntMimeTypeByUNameIdxKey.hpp>
+
+namespace cfint {
+	class ICFIntSchemaObj;
+}
+
+namespace cfint {
+	class ICFIntMimeTypeObj;
+
+	class ICFIntMimeTypeTable
+	{
+	public:
+		ICFIntMimeTypeTable();
+		virtual ~ICFIntMimeTypeTable();
+
+		virtual cfint::CFIntMimeTypeBuff* createMimeType( const cfsec::CFSecAuthorization* Authorization,
+			cfint::CFIntMimeTypeBuff* Buff ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* updateMimeType( const cfsec::CFSecAuthorization* Authorization,
+			cfint::CFIntMimeTypeBuff* Buff ) = 0;
+
+		virtual void deleteMimeType( const cfsec::CFSecAuthorization* Authorization,
+			cfint::CFIntMimeTypeBuff* Buff ) = 0;
+		virtual void deleteMimeTypeByIdIdx( const cfsec::CFSecAuthorization* Authorization,
+			const int32_t argMimeTypeId ) = 0;
+
+		virtual void deleteMimeTypeByIdIdx( const cfsec::CFSecAuthorization* Authorization,
+			const cfint::CFIntMimeTypePKey* argKey ) = 0;
+		virtual void deleteMimeTypeByUNameIdx( const cfsec::CFSecAuthorization* Authorization,
+			const std::string& argName ) = 0;
+
+		virtual void deleteMimeTypeByUNameIdx( const cfsec::CFSecAuthorization* Authorization,
+			const cfint::CFIntMimeTypeByUNameIdxKey* argKey ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* readDerived( const cfsec::CFSecAuthorization* Authorization,
+			const cfint::CFIntMimeTypePKey* PKey ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* lockDerived( const cfsec::CFSecAuthorization* Authorization,
+			const cfint::CFIntMimeTypePKey* PKey ) = 0;
+
+		virtual std::TCFLibOwningVector<cfint::CFIntMimeTypeBuff*> readAllDerived( const cfsec::CFSecAuthorization* Authorization ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* readDerivedByIdIdx( const cfsec::CFSecAuthorization* Authorization,
+			const int32_t MimeTypeId ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* readDerivedByUNameIdx( const cfsec::CFSecAuthorization* Authorization,
+			const std::string& Name ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* readBuff( const cfsec::CFSecAuthorization* Authorization,
+			const cfint::CFIntMimeTypePKey* PKey ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* lockBuff( const cfsec::CFSecAuthorization* Authorization,
+			const cfint::CFIntMimeTypePKey* PKey ) = 0;
+
+		virtual std::TCFLibOwningVector<cfint::CFIntMimeTypeBuff*> readAllBuff( const cfsec::CFSecAuthorization* Authorization ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* readBuffByIdIdx( const cfsec::CFSecAuthorization* Authorization,
+			const int32_t MimeTypeId ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* readBuffByUNameIdx( const cfsec::CFSecAuthorization* Authorization,
+			const std::string& Name ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* readBuffByLookupUNameIdx( const cfsec::CFSecAuthorization* Authorization, const std::string& Name,
+			bool forceRead = false ) = 0;
+
+		virtual cfint::CFIntMimeTypeBuff* readDerivedByLookupUNameIdx( const cfsec::CFSecAuthorization* Authorization, const std::string& Name,
+			bool forceRead = false ) = 0;
+
+		virtual void releasePreparedStatements() = 0;
+	};
+}

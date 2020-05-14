@@ -1,0 +1,860 @@
+<project name="CFInt2.13" default="all" basedir=".">
+	<description>
+		MSS Code Factory CFInt 2.13 Apache Ant Build Script
+	</description>
+	<property environment="env" />
+	<property name="pathtofx" location="${env.PATH_TO_FX}" />
+	<property name="build" location="build" />
+	<property name="bin" location="bin" />
+	<property name="lib" location="bin/lib" />
+	<property name="tomcatlib" location="bin/tomcatlib" />
+	<property name="apachejars" location="../../stdjar/apache.org" />
+	<property name="eclipsejars" location="../../stdjar/eclipse.org" />
+	<property name="javaeejars" location="../../stdjar/javaee.github.io" />
+	<property name="db2jars" location="../../stdjar/proprietary/db2.ibm.com" />
+	<property name="mssqljars" location="../../stdjar/proprietary/mssql.microsoft.com/sqljdbc_8.2/enu" />
+	<property name="mysqljars" location="../../stdjar/mysql.oracle.com" />
+	<property name="oraclejars" location="../../stdjar/proprietary/oracle.com" />
+	<property name="pgsqljars" location="../../stdjar/postgresql.org" />
+	<property name="cfintsrc" location="cfint/src" />
+	<property name="cfintramsrc" location="cfintram/src" />
+	<property name="cfintdb2luwsrc" location="cfintdb2luw/src" />
+	<property name="cfintmssqlsrc" location="cfintmssql/src" />
+	<property name="cfintmysqlsrc" location="cfintmysql/src" />
+	<property name="cfintoraclesrc" location="cfintoracle/src" />
+	<property name="cfintpgsqlsrc" location="cfintpgsql/src" />
+	<property name="cfintsaxloadersrc" location="cfintsaxloader/src" />
+	<property name="cfintsaxdb2luwloadersrc" location="cfintsaxdb2luwloader/src" />
+	<property name="cfintsaxmssqlloadersrc" location="cfintsaxmssqlloader/src" />
+	<property name="cfintsaxmysqlloadersrc" location="cfintsaxmysqlloader/src" />
+	<property name="cfintsaxoracleloadersrc" location="cfintsaxoracleloader/src" />
+	<property name="cfintsaxpgsqlloadersrc" location="cfintsaxpgsqlloader/src" />
+	<property name="cfintsaxramloadersrc" location="cfintsaxramloader/src" />
+	<property name="cfintxmsgsrc" location="cfintxmsg/src" />
+	<property name="cfintxmsgrqstsrc" location="cfintxmsgrqst/src" />
+	<property name="cfintxmsgrspnsrc" location="cfintxmsgrspn/src" />
+	<property name="cfintxmsgclntsrc" location="cfintxmsgclnt/src" />
+	<property name="cfintjavafxsrc" location="cfintjavafx/src" />
+	<property name="cfintcustsrc" location="cfintcust/src" />
+	<property name="cfintcusthttpsrc" location="cfintcusthttp/src" />
+	<property name="cfintsmwarsrc" location="cfintsmwar/src" />
+	<property name="cfintsmwarwebsrc" location="cfintsmwar/WebContent" />
+	<property name="cfintxmsgsrvwarsrc" location="cfintxmsgsrvwar/src" />
+	<property name="cfintxmsgsrvwarwebsrc" location="cfintxmsgsrvwar/WebContent" />
+	<property name="tomcat9libdir" location="tomcat9jars" />
+
+	<path id="Core.classpath">
+	</path>
+
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${bin}" />
+		<mkdir dir="${bin}/lib" />
+		<mkdir dir="${bin}/tomcatlib" />
+		<mkdir dir="${bin}/xsd" />
+		<copy todir="${tomcatlib}">
+			<fileset dir="${apachejars}/tomcat9">
+				<include name="servlet-api.jar" />
+			</fileset>
+			<fileset dir="${javaeejars}">
+				<include name="javax.mail.jar" />
+			</fileset>
+		</copy>
+		<move file="${tomcatlib}/servlet-api.jar" tofile="${tomcatlib}/javax.servlet.jar" />
+		<copy todir="${lib}">
+			<fileset dir="${apachejars}">
+				<include name="commons-codec-1.14.jar" />
+				<include name="commons-io-2.6.jar" />
+				<include name="commons-logging-1.2.jar" />
+				<include name="log4j-1.2-api-2.13.0.jar" />
+				<include name="log4j-api-2.13.0.jar" />
+				<include name="log4j-core-2.13.0.jar" />
+				<include name="xercesImpl-2.12.1-xml-schema-1.1.jar" />
+				<include name="org.apache.httpcomponents.httpclient-4.5.11.jar" />
+				<include name="org.apache.httpcomponents.httpcore-4.4.13.jar" />
+			</fileset>
+			<fileset dir="${eclipsejars}">
+				<include name="org.eclipse.wst.xml.xpath2.processor_1.2.0.jar" />
+			</fileset>
+			<fileset dir="${db2jars}">
+				<include name="db2jcc4.jar" />
+				<include name="db2jcc_license_cu.jar" />
+			</fileset>
+			<fileset dir="${mssqljars}">
+				<include name="mssql-jdbc-8.2.0.jre13.jar" />
+			</fileset>
+			<fileset dir="${mysqljars}">
+				<include name="mysql-connector-java-8.0.19.jar" />
+			</fileset>
+			<fileset dir="${oraclejars}">
+				<include name="ojdbc10.jar" />
+			</fileset>
+			<fileset dir="${pgsqljars}">
+				<include name="postgresql-42.2.10.jar" />
+			</fileset>
+		</copy>
+		<move file="${lib}/commons-codec-1.14.jar" tofile="${lib}/org.apache.commons.codec.jar" />
+		<move file="${lib}/commons-io-2.6.jar" tofile="${lib}/org.apache.commons.io.jar" />
+		<move file="${lib}/commons-logging-1.2.jar" tofile="${lib}/org.apache.commons.logging.jar" />
+		<move file="${lib}/log4j-1.2-api-2.13.0.jar" tofile="${lib}/org.apache.logging.log4j.api.glue.jar" />
+		<move file="${lib}/log4j-api-2.13.0.jar" tofile="${lib}/org.apache.logging.log4j.jar" />
+		<move file="${lib}/log4j-core-2.13.0.jar" tofile="${lib}/org.apache.logging.log4j.core.jar" />
+		<move file="${lib}/xercesImpl-2.12.1-xml-schema-1.1.jar" tofile="${lib}/org.apache.xercesImpl.xml.schema.jar" />
+		<move file="${lib}/org.apache.httpcomponents.httpclient-4.5.11.jar" tofile="${lib}/org.apache.httpcomponents.httpclient.jar" />
+		<move file="${lib}/org.apache.httpcomponents.httpcore-4.4.13.jar" tofile="${lib}/org.apache.httpcomponents.httpcore.jar" />
+		<move file="${lib}/org.eclipse.wst.xml.xpath2.processor_1.2.0.jar" tofile="${lib}/org.eclipse.wst.xml.xpath2.processor.jar" />
+		<move file="${lib}/db2jcc4.jar" tofile="${lib}/db2jcc.jar" />
+		<move file="${lib}/db2jcc_license_cu.jar" tofile="${lib}/com.ibm.db2.jcc.licenses.jar" />
+		<!-- move file="${lib}/mssql-jdbc-8.2.0.jre13.jar" tofile="${lib}/com.microsoft.sqlserver.jar" / -->
+		<move file="${lib}/mysql-connector-java-8.0.19.jar" tofile="${lib}/com.mysql.jdbc.jar" />
+		<move file="${lib}/ojdbc10.jar" tofile="${lib}/oracle.jar" />
+		<move file="${lib}/postgresql-42.2.10.jar" tofile="${lib}/org.postgresql.jar" />
+		<copy todir="${bin}">
+			<fileset dir="../../cflib_2_13/java/bin">
+				<include name="com.github.msobkow.cflib.CFLib.jar" />
+				<include name="com.github.msobkow.cflib.CFLib.JavaFX.jar" />
+			</fileset>
+			<fileset dir="../../cfcore_2_13/java/bin">
+				<include name="com.github.msobkow.cfcore.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${bin}">
+			<fileset dir="../../cfsec_2_13/java/bin">
+				<include name="com.github.msobkow.cfsec.jar" />
+				<include name="com.github.msobkow.cfsec.CFSecSaxLoader.jar" />
+				<include name="com.github.msobkow.cfsec.CFSecJavaFX.jar" />
+				<include name="com.github.msobkow.cfseccust.CFSecCust.jar" />
+			</fileset>
+		</copy>
+		<mkdir dir="${bin}/xsd" />
+		<copy todir="${bin}/xsd">
+			<fileset dir="../../cflib_2_13/java/cflib/xsd">
+				<include name="cftip-envelope.xsd" />
+				<include name="cftip-serverinfo.xsd" />
+			</fileset>
+			<fileset dir="../../cfcore_2_13/java/cfcore/xsd">
+				<include name="cfgenkb-2.13-cartridge.xsd" />
+				<include name="cfgenkb-2.13-ruleset.xsd" />
+				<include name="cfgenkb-2.13-toolset.xsd" />
+			</fileset>
+			<fileset dir="cfintsaxloader/xsd">
+				<include name="cfint-structured.xsd" />
+			</fileset>
+			<fileset dir="cfintxmsgrqst/xsd">
+				<include name="cfint-rqst.xsd" />
+			</fileset>
+			<fileset dir="cfintxmsgrspn/xsd">
+				<include name="cfint-rspn.xsd" />
+			</fileset>
+		</copy>
+		<mkdir dir="${build}" />
+		<mkdir dir="${build}/xsd" />
+		<copy todir="${build}/xsd">
+			<fileset dir="../../cflib_2_13/java/cflib/xsd">
+				<include name="cftip-envelope.xsd" />
+				<include name="cftip-serverinfo.xsd" />
+			</fileset>
+			<fileset dir="../../cfcore_2_13/java/cfcore/xsd">
+				<include name="cfgenkb-2.13-cartridge.xsd" />
+				<include name="cfgenkb-2.13-ruleset.xsd" />
+				<include name="cfgenkb-2.13-toolset.xsd" />
+			</fileset>
+			<fileset dir="cfintsaxloader/xsd">
+				<include name="cfint-structured.xsd" />
+			</fileset>
+			<fileset dir="cfintxmsgrqst/xsd">
+				<include name="cfint-rqst.xsd" />
+			</fileset>
+			<fileset dir="cfintxmsgrspn/xsd">
+				<include name="cfint-rspn.xsd" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Build the core -->
+
+	<target name="compilecore" depends="init" description="Compile the core package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="corejar" depends="compilecore" description="Package the core jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.jar" basedir="${build}/com.github.msobkow.cfint" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFInt/*.class" />
+			<include name="com/github/msobkow/cfint/CFIntObj/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Build the SAX Ldr -->
+
+	<target name="compilesaxloader" depends="corejar" description="Compile the saxloader package">
+		<copy todir="${build}/xsd">
+			<fileset dir="cfintsaxloader/xsd">
+				<include name="*.xsd" />
+			</fileset>
+		</copy>
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="saxloaderjar" depends="compilesaxloader" description="Package the saxloader jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar" basedir="${build}/com.github.msobkow.cfint.CFIntSaxLoader" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntSaxLoader/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntSaxLoader" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt SAX Ldr" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Build the RAM Persistence Implementation -->
+
+	<target name="compileram" depends="saxloaderjar" description="Compile the ram package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintramsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="ramjar" depends="compileram" description="Package the ram jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntRam.jar" basedir="${build}/com.github.msobkow.cfint.CFIntRam" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntRam/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntRam" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt RAM Persistence Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Build the various JDBC Persistence Implementations -->
+
+	<target name="compiledb2luw" depends="corejar,saxloaderjar" description="Compile the db2luw package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintdb2luwsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="db2luwjar" depends="compiledb2luw" description="Package the db2luw jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntDb2LUW.jar" basedir="${build}/com.github.msobkow.cfint.CFIntDb2LUW" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntDb2LUW/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntDb2LUW" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt DB/2 LUW Persistence Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilemssql" depends="corejar,saxloaderjar" description="Compile the mssql package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintmssqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="mssqljar" depends="compilemssql" description="Package the mssql jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntMSSql.jar" basedir="${build}/com.github.msobkow.cfint.CFIntMSSql" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntMSSql/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntMSSql" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Microsoft SQL Server Persistence Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilemysql" depends="corejar,saxloaderjar" description="Compile the mysql package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintmysqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="mysqljar" depends="compilemysql" description="Package the mysql jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntMySql.jar" basedir="${build}/com.github.msobkow.cfint.CFIntMySql" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntMySql/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntMySql" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt MySql Persistence Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compileoracle" depends="corejar,saxloaderjar" description="Compile the oracle package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintoraclesrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="oraclejar" depends="compileoracle" description="Package the oracle jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntOracle.jar" basedir="${build}/com.github.msobkow.cfint.CFIntOracle" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntOracle/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntOracle" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Oracle Persistence Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilepgsql" depends="corejar,saxloaderjar" description="Compile the pgsql package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintpgsqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="pgsqljar" depends="compilepgsql" description="Package the pgsql jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntPgSql.jar" basedir="${build}/com.github.msobkow.cfint.CFIntPgSql" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntPgSql/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntPgSql" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Postgresql Persistence Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Build the SAX Ldr Executables -->
+
+	<target name="compilesaxdb2luwloader" depends="corejar,saxloaderjar,db2luwjar" description="Compile the saxdb2luwloader package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxdb2luwloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntDb2LUW.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="saxdb2luwloaderjar" depends="compilesaxdb2luwloader" description="Package the saxdb2luwloader executable">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntSaxDb2LUWLdr.jar" basedir="${build}/com.github.msobkow.cfint.CFIntSaxDb2LUWLdr" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntSaxDb2LUWLdr/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntSaxDb2LUWLdr" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt DB/2 LUW SAX Ldr Executable" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilesaxmssqlloader" depends="compilesaxloader,compilemysql" description="Compile the saxmssqlloader package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxmssqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntMSSql.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="saxmssqlloaderjar" depends="compilesaxmssqlloader" description="Package the saxmssqlloader executable">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntSaxMSSqlLdr.jar" basedir="${build}/com.github.msobkow.cfint.CFIntSaxMSSqlLdr" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntSaxMSSqlLdr/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntSaxMSSqlLdr" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Microsoft SQL Server SAX Ldr Executable" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilesaxmysqlloader" depends="corejar,saxloaderjar,mysqljar" description="Compile the saxmysqlloader package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxmysqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntMySql.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="saxmysqlloaderjar" depends="compilesaxmysqlloader" description="Package the saxmysqlloader executable">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntSaxMySqlLdr.jar" basedir="${build}/com.github.msobkow.cfint.CFIntSaxMySqlLdr" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntSaxMySqlLdr/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntSaxMySqlLdr" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt MySql SAX Ldr Executable" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilesaxoracleloader" depends="compilesaxloader,compileoracle" description="Compile the saxoracleloader package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxoracleloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntOracle.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="saxoracleloaderjar" depends="compilesaxoracleloader" description="Package the saxoracleloader executable">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntSaxOracleLdr.jar" basedir="${build}/com.github.msobkow.cfint.CFIntSaxOracleLdr" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntSaxOracleLdr/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntSaxOracleLdr" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Oracle SAX Ldr Executable" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilesaxpgsqlloader" depends="corejar,saxloaderjar,pgsqljar" description="Compile the saxpgsqlloader package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxpgsqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntPgSql.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="saxpgsqlloaderjar" depends="compilesaxpgsqlloader" description="Package the saxpgsqlloader executable">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntSaxPgSqlLdr.jar" basedir="${build}/com.github.msobkow.cfint.CFIntSaxPgSqlLdr" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntSaxPgSqlLdr/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntSaxPgSqlLdr" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Postgresql SAX Ldr Executable" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilesaxramloader" depends="corejar,saxloaderjar,ramjar" description="Compile the saxramloader package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxramloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntRam.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="saxramloaderjar" depends="compilesaxramloader" description="Package the saxramloader executable">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntSaxRamLdr.jar" basedir="${build}/com.github.msobkow.cfint.CFIntSaxRamLdr" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntSaxRamLdr/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntSaxRamLdr" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt RAM SAX Ldr Executable" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Build the X(ml)Msg layers -->
+
+	<target name="compilexmsg" depends="corejar" description="Compile the xmsg package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintxmsgsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${tomcatlib}:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="xmsgjar" depends="compilexmsg" description="Package the xmsg jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntXMsg.jar" basedir="${build}/com.github.msobkow.cfint.CFIntXMsg" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntXMsg/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntXMsg" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt XMsg Formatting Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilexmsgrqst" depends="corejar,saxloaderjar,xmsgjar" description="Compile the xmsgrqst package">
+		<copy todir="${build}/xsd">
+			<fileset dir="cfintxmsgrqst/xsd">
+				<include name="*.xsd" />
+			</fileset>
+		</copy>
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintxmsgrqstsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntXMsg.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="xmsgrqstjar" depends="compilexmsgrqst" description="Package the xmsgrqst jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntXMsgRqst.jar" basedir="${build}/com.github.msobkow.cfint.CFIntXMsgRqst" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntXMsgRqst/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntXMsgRqst" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt XMsg Request Handler Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilexmsgrspn" depends="xmsgjar" description="Compile the xmsgrspn package">
+		<copy todir="${build}/xsd">
+			<fileset dir="cfintxmsgrspn/xsd">
+				<include name="*.xsd" />
+			</fileset>
+		</copy>
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintxmsgrspnsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntXMsg.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="xmsgrspnjar" depends="compilexmsgrspn" description="Package the xmsgrspn jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntXMsgRspn.jar" basedir="${build}/com.github.msobkow.cfint.CFIntXMsgRspn" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntXMsgRspn/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntXMsgRspn" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt XMsg Response Handler Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="compilexmsgclnt" depends="corejar,xmsgjar,xmsgrspnjar" description="Compile the xmsgclnt package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintxmsgclntsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntXMsgRspn.jar:${bin}/com.github.msobkow.cfint.CFIntXMsg.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="xmsgclntjar" depends="compilexmsgclnt" description="Package the xmsgclnt jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntXMsgClnt.jar" basedir="${build}/com.github.msobkow.cfint.CFIntXMsgClnt" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntXMsgClnt/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntXMsgClnt" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt XMsg Client Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Build the JavaFX GUI CRUD -->
+
+	<target name="compilejavafx" depends="corejar" description="Compile the javafx package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintjavafxsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${pathtofx}:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.CFSecJavaFX.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.JavaFX.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="javafxjar" depends="compilejavafx" description="Package the javafx jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfint.CFIntJavaFX.jar" basedir="${build}/com.github.msobkow.cfint.CFIntJavaFX" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfint/CFIntJavaFX/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfint.CFIntJavaFX" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt JavaFX Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Build the JavaFX Cust User Interface -->
+
+	<target name="compilecust" depends="corejar,javafxjar" description="Compile the cust package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintcustsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${pathtofx}:${bin}/com.github.msobkow.cfint.CFIntJavaFX.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfseccust.CFSecCust.jar:${bin}/com.github.msobkow.cfsec.CFSecJavaFX.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.JavaFX.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="custjar" depends="compilecust" description="Package the cust jar">
+		<jar jarfile="${bin}/com.github.msobkow.cfintcust.CFIntCust.jar" basedir="${build}/com.github.msobkow.cfintcust.CFIntCust" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfintcust/CFIntCust/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfintcust.CFIntCust" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Cust JavaFX Implementation" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Build the Cust HTTP Client for accessing the Tomcat XMsg WAR server -->
+
+	<target name="compilecusthttp" depends="corejar,javafxjar,custjar" description="Compile the cust HTTP Client package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintcusthttpsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${pathtofx}:${bin}/com.github.msobkow.cfintcust.CFIntCust.jar:${bin}/com.github.msobkow.cfint.CFIntJavaFX.jar:${bin}/com.github.msobkow.cfint.CFIntXMsgClnt.jar:${bin}/com.github.msobkow.cfint.CFIntXMsgRspn.jar:${bin}/com.github.msobkow.cfint.CFIntXMsg.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfseccust.CFSecCust.jar:${bin}/com.github.msobkow.cfsec.CFSecJavaFX.jar:${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.JavaFX.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<target name="custhttpjar" depends="compilecusthttp" description="Package the cust HTTP Client executable">
+		<jar jarfile="${bin}/com.github.msobkow.cfintcust.CFIntCustHttp.jar" basedir="${build}/com.github.msobkow.cfintcust.CFIntCustHttp" >
+			<include name="*.class" />
+			<include name="com/github/msobkow/cfintcust/CFIntCustHttp/*.class" />
+			<manifest>
+				<attribute name="Codebase" value="com.github.msobkow.cfintcust.CFIntCustHttp" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
+				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Cust HTTP Client Executable" />
+				<attribute name="Implementation-Version" value="2.13"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Tie all the code so far together and copy the JARS to the WARs -->
+
+	<target name="compileall" depends="compilecore,compilesaxloader,compileram,compiledb2luw,compilemssql,compilemysql,compileoracle,compilepgsql,compilesaxdb2luwloader,compilesaxmssqlloader,compilesaxmysqlloader,compilesaxoracleloader,compilesaxpgsqlloader,compilesaxramloader,compilexmsg,compilexmsgrqst,compilexmsgrspn,compilexmsgclnt,compilejavafx,compilecust,compilecusthttp">
+	</target>
+
+	<target name="alljars" depends="corejar,saxloaderjar,ramjar,db2luwjar,mssqljar,mysqljar,oraclejar,pgsqljar,saxdb2luwloaderjar,saxmssqlloaderjar,saxmysqlloaderjar,saxoracleloaderjar,saxpgsqlloaderjar,saxramloaderjar,xmsgjar,xmsgrqstjar,xmsgrspnjar,xmsgclntjar,javafxjar,custjar,custhttpjar">
+		<copy todir="cfintsmwar/WebContent/WEB-INF/lib">
+			<fileset dir="${lib}">
+				<include name="org.apache.commons.codec.jar" />
+				<include name="org.apache.commons.io.jar" />
+				<include name="org.apache.commons.logging.jar" />
+				<include name="org.apache.logging.log4j.api.glue.jar" />
+				<include name="org.apache.logging.log4j.jar" />
+				<include name="org.apache.logging.log4j.core.jar" />
+				<include name="org.apache.xercesImpl.xml.schema.jar" />
+				<include name="org.eclipse.wst.xml.xpath2.processor.jar" />
+				<!-- Install these to the Web Server directly - needed for specifying JDBC connection resources -->
+				<!-- include name="db2jcc.jar" / -->
+				<!-- include name="com.ibm.db2.jcc.licenses.jar" / -->
+				<!-- include name="mssql-jdbc.jar" / -->
+				<!-- include name="com.mysql.jdbc.jar" / -->
+				<!-- include name="oracle.jar" / -->
+				<!-- include name="org.postgresql.jar" / -->
+			</fileset>
+			<fileset dir="${bin}">
+				<include name="com.github.msobkow.cflib.CFLib.jar" />
+				<include name="com.github.msobkow.cfsec.jar" />
+				<include name="com.github.msobkow.cfint.jar" />
+				<include name="com.github.msobkow.cfint.CFIntSaxLoader.jar" />
+				<include name="com.github.msobkow.cfint.CFIntDb2luw.jar" />
+				<include name="com.github.msobkow.cfint.CFIntMSSql.jar" />
+				<include name="com.github.msobkow.cfint.CFIntMySql.jar" />
+				<include name="com.github.msobkow.cfint.CFIntOracle.jar" />
+				<include name="com.github.msobkow.cfint.CFIntPgSql.jar" />
+			</fileset>
+		</copy>
+		<copy todir="cfintxmsgsrvwar/WebContent/WEB-INF/lib">
+			<fileset dir="${lib}">
+				<include name="org.apache.commons.codec.jar" />
+				<include name="org.apache.commons.io.jar" />
+				<include name="org.apache.commons.logging.jar" />
+				<include name="org.apache.logging.log4j.api.glue.jar" />
+				<include name="org.apache.logging.log4j.jar" />
+				<include name="org.apache.logging.log4j.core.jar" />
+				<include name="org.apache.xercesImpl.xml.schema.jar" />
+				<include name="org.eclipse.wst.xml.xpath2.processor.jar" />
+				<!-- Install these to the Web Server directly - needed for specifying JDBC connection resources -->
+				<!-- include name="db2jcc.jar" / -->
+				<!-- include name="com.ibm.db2.jcc.licenses.jar" / -->
+				<!-- include name="mssql-jdbc.jar" / -->
+				<!-- include name="com.mysql.jdbc.jar" / -->
+				<!-- include name="oracle.jar" / -->
+				<!-- include name="org.postgresql.jar" / -->
+			</fileset>
+			<fileset dir="${bin}">
+				<include name="com.github.msobkow.cflib.CFLib.jar" />
+				<include name="com.github.msobkow.cfsec.jar" />
+				<include name="com.github.msobkow.cfint.jar" />
+				<include name="com.github.msobkow.cfint.CFIntSaxLoader.jar" />
+				<include name="com.github.msobkow.cfint.CFIntDb2luw.jar" />
+				<include name="com.github.msobkow.cfint.CFIntMSSql.jar" />
+				<include name="com.github.msobkow.cfint.CFIntMySql.jar" />
+				<include name="com.github.msobkow.cfint.CFIntOracle.jar" />
+				<include name="com.github.msobkow.cfint.CFIntPgSql.jar" />
+				<include name="com.github.msobkow.cfint.CFIntXmsg.jar" />
+				<include name="com.github.msobkow.cfint.CFIntXmsgRqst.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Compile the Int Management WAR to be deployed via Tomcat HTTPS -->
+
+	<target name="compilesmwar" depends="alljars" description="Compile the smwar package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsmwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntDb2LUW.jar:${bin}/com.github.msobkow.cfint.CFIntMSSql.jar:${bin}/com.github.msobkow.cfint.CFIntMySql.jar:${bin}/com.github.msobkow.cfint.CFIntOracle.jar:${bin}/com.github.msobkow.cfint.CFIntPgSql.jar:${bin}/com.github.msobkow.cfint.CFIntRam.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${tomcatlib}:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<!-- Compile the X(ml)Msg Server WAR to be deployed via Tomcat HTTP -->
+
+	<target name="compilexmsgsrvwar" depends="alljars" description="Compile the xmsgsrvwar package">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintxmsgsrvwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/com.github.msobkow.cfint.CFIntDb2LUW.jar:${bin}/com.github.msobkow.cfint.CFIntMSSql.jar:${bin}/com.github.msobkow.cfint.CFIntMySql.jar:${bin}/com.github.msobkow.cfint.CFIntOracle.jar:${bin}/com.github.msobkow.cfint.CFIntPgSql.jar:${bin}/com.github.msobkow.cfint.CFIntRam.jar:${bin}/com.github.msobkow.cfint.CFIntXMsgRqst.jar:${bin}/com.github.msobkow.cfint.CFIntXMsg.jar:${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar:${bin}/com.github.msobkow.cfint.jar:${bin}/com.github.msobkow.cfsec.jar:${bin}/com.github.msobkow.cflib.CFLib.jar:${tomcatlib}:${lib}">
+			<compilerarg value="-Xlint:unchecked" />
+			<compilerarg value="-Xlint:deprecation" />
+		</javac>
+	</target>
+
+	<!-- Package the WARs -->
+
+	<target name="packagewars" depends="alljars,compilesmwar,compilexmsgsrvwar" description="Package the WARs">
+		<war destfile="${bin}/com.github.msobkow.cfint.CFIntSMWar.war" webxml="${cfintsmwarwebsrc}/WEB-INF/web.xml" basedir="${build}/com.github.msobkow.cfint.CFIntSMWar" >
+			<fileset dir="${cfintsmwarwebsrc}">
+				<include name="**/*.html" />
+				<include name="**/*.xml" />
+				<include name="**/*.xsd" />
+				<include name="**/*.jsp" />
+				<include name="**/*.jpeg" />
+				<include name="**/*.gif" />
+			</fileset>
+			<lib dir="${cfintsmwarwebsrc}/WEB-INF/lib">
+			</lib>
+			<classes dir="${build}/com.github.msobkow.cfint.CFIntSMWar" >
+				<include name="*.class" />
+				<include name="com/github/msobkow/cfint/CFIntSMWar/*.class" />
+			</classes>
+		</war>
+		<war destfile="${bin}/com.github.msobkow.cfint.CFIntXMsgSrvWar.jar" webxml="${cfintxmsgsrvwarwebsrc}/WEB-INF/web.xml" basedir="${build}/com.github.msobkow.cfint.CFIntXMsgSrvWar" >
+			<fileset dir="${cfintxmsgsrvwarwebsrc}">
+				<include name="**/*.html" />
+				<include name="**/*.xml" />
+				<include name="**/*.xsd" />
+				<include name="**/*.jsp" />
+				<include name="**/*.jpeg" />
+				<include name="**/*.gif" />
+			</fileset>
+			<lib dir="${cfintxmsgsrvwarwebsrc}/WEB-INF/lib">
+			</lib>
+			<classes dir="${build}/com.github.msobkow.cfint.CFIntXMsgSrvWar" >
+				<include name="*.class" />
+				<include name="com/github/msobkow/cfint/CFIntXMsgSrvWar/*.class" />
+			</classes>
+		</war>
+	</target>
+
+	<!-- Clean up -->
+
+	<target name="clean">
+		<delete dir="${build}" />
+		<delete dir="${lib}" />
+		<delete dir="${bin}/xsd" />
+		<delete dir="${bin}/tomcatlib" />
+		<delete file="${bin}/com.github.msobkow.cflib.CFLib.jar" />
+		<delete file="${bin}/com.github.msobkow.cflib.CFLib.JavaFX.jar" />
+		<delete file="${bin}/com.github.msobkow.cfcore.jar" />
+		<delete file="${bin}/com.github.msobkow.cfsec.jar" />
+		<delete file="${bin}/com.github.msobkow.cfsec.CFSecSaxLoader.jar" />
+		<delete file="${bin}/com.github.msobkow.cfsec.CFSecJavaFX.jar" />
+		<delete file="${bin}/com.github.msobkow.cfseccust.CFSecCust.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntSaxLoader.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntMssCF.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntDb2LUW.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntMSSql.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntMySql.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntOracle.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntPgSql.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntRam.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntSaxDb2LUWLdr.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntSaxMSSqlLdr.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntSaxMySqlLdr.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntSaxOracleLdr.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntSaxPgSqlLdr.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntSaxRamLdr.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntXMsg.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntXMsgRqst.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntXMsgRspn.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntXMsgClnt.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntJavaFX.jar" />
+		<delete file="${bin}/com.github.msobkow.cfintcust.CFIntCust.jar" />
+		<delete file="${bin}/com.github.msobkow.cfintcust.CFIntCustHttp.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntXMsgRqst.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntXMsgRspn.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntXMsgSrvWar.jar" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntSMWar.war" />
+		<delete file="${bin}/com.github.msobkow.cfint.CFIntXMsgSrvWar.war" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.apache.commons.codec.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.apache.commons.io.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.apache.commons.logging.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.apache.logging.log4j.api.glue.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.apache.logging.log4j.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.apache.logging.log4j.core.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.apache.xercesImpl.xml.schema.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.eclipse.wst.xml.xpath2.processor.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cflib.CFLib.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntSaxLoader.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntDb2LUW.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntMSSql.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntMySql.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntOracle.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntPgSql.jar" />
+		<delete file="cfintsmwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntRam.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.commons.codec.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.commons.io.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.commons.logging.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.logging.log4j.api.glue.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.logging.log4j.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.logging.log4j.core.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.xercesImpl.xml.schema.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.eclipse.wst.xml.xpath2.processor.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cflib.CFLib.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfsec.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntSaxLoader.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntDb2LUW.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntMSSql.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntMySql.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntOracle.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntPgSql.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntRam.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntXMsg.jar" />
+		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/com.github.msobkow.cfint.CFIntXMsgRqst.jar" />
+	</target>
+
+	<!-- Make It So! -->
+
+	<target name="all" depends="init,alljars,packagewars,javafxjar,custjar,custhttpjar" >
+	</target>
+
+</project>

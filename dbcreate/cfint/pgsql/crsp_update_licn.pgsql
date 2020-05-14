@@ -1,0 +1,136 @@
+--
+--	@(#) dbcreate/cfint/pgsql/crsp_update_licn.pgsql
+--
+--	com.github.msobkow.CFInt
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	This file is part of MSS Code Factory.
+--	
+--	Licensed under the Apache License, Version 2.0 (the "License");
+--	you may not use this file except in compliance with the License.
+--	You may obtain a copy of the License at
+--	
+--	    http://www.apache.org/licenses/LICENSE-2.0
+--	
+--	Unless required by applicable law or agreed to in writing, software
+--	distributed under the License is distributed on an "AS IS" BASIS,
+--	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+--	See the License for the specific language governing permissions and
+--	limitations under the License.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+
+create or replace function cfinet213.sp_update_licn(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argClassCode varchar(4),
+	argTenantId bigint,
+	argId bigint,
+	argTopDomainId bigint,
+	argName varchar(64),
+	argDescription varchar(1024),
+	argEmbeddedText text,
+	argFullText text,
+	argRevision integer )
+returns setof cfinet213.type_licn_rec as $$
+declare
+	RowsAffected integer;
+	oldTenantId bigint;
+	oldId bigint;
+	oldTopDomainId bigint;
+	oldName varchar(64);
+	oldDescription varchar(1024);
+	oldEmbeddedText text;
+	oldFullText text;
+	oldRevision int;
+	permissionFlag boolean;
+begin
+	if( argClassCode = 'a101' )
+	then
+		select cfinet213.sp_is_tenant_user( argTenantId,
+			'UpdateLicense',
+			argAuditUserId )
+		into permissionFlag;
+		if( permissionFlag = false )
+		then
+			raise exception 'Permission denied -- User not found in tenant TSecGroup for UpdateLicense';
+		end if;
+	end if;
+
+		select
+			TenantId,
+			Id,
+			TopDomainId,
+			safe_name,
+			descr,
+			EmbeddedText,
+			FullTxt,
+			revision
+		into
+			oldTenantId,
+			oldId,
+			oldTopDomainId,
+			oldName,
+			oldDescription,
+			oldEmbeddedText,
+			oldFullText,
+			oldRevision
+		from cfinet213.licn
+		where
+			TenantId = argTenantId
+			and Id = argId
+		for update;
+
+
+	if argRevision != oldRevision
+	then
+		raise exception 'sp_update_licn() Data collision detected';
+	end if;
+
+
+	update cfinet213.licn
+	set
+		revision = argRevision + 1,
+		topdomainid = argTopDomainId,
+		safe_name = argName,
+		descr = argDescription,
+		embeddedtext = argEmbeddedText,
+		fulltxt = argFullText
+	where
+		TenantId = argTenantId
+			and Id = argId
+		and revision = oldRevision;
+
+	get diagnostics RowsAffected = row_count;
+
+	if RowsAffected != 1
+	then
+		raise exception 'sp_update_licn() Expected to affect one licn row, not %', RowsAffected;
+	end if;
+
+
+	return query select
+			a101.tenantid as tenantid,
+			a101.id as id,
+			a101.topdomainid as topdomainid,
+			a101.safe_name as safe_name,
+			a101.descr as descr,
+			a101.embeddedtext as embeddedtext,
+			a101.fulltxt as fulltxt,
+		a101.revision as revision
+	from cfinet213.licn as a101
+	where
+		a101.tenantid = argTenantId
+			and a101.id = argId;
+
+	return;
+end;
+$$ language plpgsql;

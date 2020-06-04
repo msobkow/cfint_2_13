@@ -1,6 +1,6 @@
-AC_INIT([msobkow CFInt SAX Loader],2.13.11190,[msobkow@sasktel.net],[libcfintsaxloader],[http://msobkow.github.com/])
+AC_INIT([msobkow CFInt SAX Loader],2.13.11192,[msobkow@sasktel.net],[libcfintsaxloader],[http://msobkow.github.com/])
 AC_COPYRIGHT([Copyright (c) 2020 Mark Stephen Sobkow])
-AC_REVISION(2.13.11190)
+AC_REVISION(2.13.11192)
 AM_INIT_AUTOMAKE([foreign])
 AC_PROG_CXX()
 LT_INIT([shared])

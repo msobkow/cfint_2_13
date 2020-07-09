@@ -1,7 +1,7 @@
 // Description: C++18 implementation for a MajorVersion by TenantIdx index key object.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

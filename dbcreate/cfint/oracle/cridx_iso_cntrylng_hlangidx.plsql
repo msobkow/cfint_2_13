@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/oracle/cridx_iso_cntrylng_hlangidx.plsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

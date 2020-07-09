@@ -1,7 +1,7 @@
 // Description: C++18 Object interface implementation for CFInt TSecGrpMemb.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/pgsql/crsp_read_iso_cntryccy_by_ccyidx.pgsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

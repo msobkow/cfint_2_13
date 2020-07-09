@@ -3,7 +3,7 @@
 // Description: C++18 Interface of a Cluster 64-bit in-memory RAM Id Generator object.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

@@ -2,7 +2,7 @@
 // Description: C++18 Implementation for an in-memory RAM DbIO for HostNode.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

@@ -3,7 +3,7 @@
 // Description: C++18 base object instance specification for CFInt ISOCtryCcy.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

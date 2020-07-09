@@ -3,7 +3,7 @@
 // Description: C++18 Interface for an in-memory RAM DbIO declementation for ServiceType.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

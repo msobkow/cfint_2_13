@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/pgsql/cridx_tsecmember_xtenant.pgsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

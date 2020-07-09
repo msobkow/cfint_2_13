@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/mssql/crsp_delete_licn_by_unameidx.tsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

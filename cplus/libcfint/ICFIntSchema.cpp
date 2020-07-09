@@ -1,7 +1,7 @@
 // Description: C++18 interface implementation for a CFInt schema.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

@@ -3,7 +3,7 @@
 // Description: C++18 Schema Object specification for CFInt.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

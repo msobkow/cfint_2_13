@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/db2luw/crsp_read_iso_ccy_by_ccynmidx.sql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

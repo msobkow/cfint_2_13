@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/pgsql/crsp_read_secgrp_by_unameidx.pgsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

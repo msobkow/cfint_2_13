@@ -2,7 +2,7 @@
 REM
 REM	@(#) dbcreate/cfint/mysql/cridx_cfinet213.bat
 REM
-REM	com.github.msobkow.CFInt
+REM	org.msscf.msscf.CFInt
 REM
 REM	Copyright (c) 2020 Mark Stephen Sobkow
 REM	

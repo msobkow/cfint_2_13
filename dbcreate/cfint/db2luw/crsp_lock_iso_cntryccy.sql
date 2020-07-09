@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/db2luw/crsp_lock_iso_cntryccy.sql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

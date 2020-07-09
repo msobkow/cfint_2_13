@@ -2,7 +2,7 @@
 #
 #	@(#) dbcreate/cfint/db2luw/crrel_cfinet213.bash
 #
-#	com.github.msobkow.CFInt
+#	org.msscf.msscf.CFInt
 #
 #	Copyright (c) 2020 Mark Stephen Sobkow
 #	

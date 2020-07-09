@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/pgsql/crsp_delete_secmemb_by_groupidx.pgsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

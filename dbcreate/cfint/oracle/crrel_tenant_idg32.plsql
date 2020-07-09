@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/oracle/crrel_tenant_idg32.plsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

@@ -3,7 +3,7 @@
 // Description: C++18 Instance Edit Object interface for CFInt SecDevice.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

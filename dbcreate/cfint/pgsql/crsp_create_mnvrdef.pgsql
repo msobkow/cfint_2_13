@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/pgsql/crsp_create_mnvrdef.pgsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

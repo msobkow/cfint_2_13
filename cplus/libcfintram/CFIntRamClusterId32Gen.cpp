@@ -1,7 +1,7 @@
 // Description: C++18 Implementation of a Cluster 32-bit in-memory RAM Id Generator object.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

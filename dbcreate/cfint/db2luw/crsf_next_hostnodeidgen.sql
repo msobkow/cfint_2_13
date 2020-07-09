@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/db2luw/crsf_next_hostnodeidgen.sql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

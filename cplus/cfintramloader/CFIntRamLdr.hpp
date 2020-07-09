@@ -3,7 +3,7 @@
 // Description: C++18 Command Line Object Interface for CFInt RAM Loader
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

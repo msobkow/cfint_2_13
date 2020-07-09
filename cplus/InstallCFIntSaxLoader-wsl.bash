@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#	com.github.msobkow.CFInt
+#	org.msscf.msscf.CFInt
 #
 #	Copyright (c) 2020 Mark Stephen Sobkow
 #	
@@ -27,16 +27,16 @@ MAJOR_VERSION=2
 MINOR_VERSION=13
 pushd libcfintsaxloader
 	sudo make install
-	sudo chmod 755 /usr/include/msobkow
-	sudo chmod 755 /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}
-	sudo chmod 755 /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintsaxloader
-	sudo sh -c "cd /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintsaxloader && chmod 644 *.hpp"
+	sudo chmod 755 /usr/include/msscf
+	sudo chmod 755 /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
+	sudo chmod 755 /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintsaxloader
+	sudo sh -c "cd /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintsaxloader && chmod 644 *.hpp"
 	#sudo chmod 755 /usr/bin/*cfint*saxloader
 	sudo chmod 755 /usr/lib/*cfintsaxloader.la
 	sudo chmod 755 /usr/lib/*cfintsaxloader.so*
-	sudo chmod 755 /usr/share/msobkow
-	sudo chmod 755 /usr/share/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}
-	sudo chmod 755 /usr/share/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/xsd
-	sudo chmod 644 /usr/share/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/xsd/*cfint*.xsd
+	sudo chmod 755 /usr/share/msscf
+	sudo chmod 755 /usr/share/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
+	sudo chmod 755 /usr/share/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/xsd
+	sudo chmod 644 /usr/share/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/xsd/*cfint*.xsd
 	sudo ldconfig
 popd

@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/db2luw/cridx_secform_h_ujeeservletidx.sql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/oracle/crrd_iso_langbycode3idx.plsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

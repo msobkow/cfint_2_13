@@ -1,7 +1,7 @@
 // Description: C++18 XML SAX Parser public interface implementation for CFInt.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

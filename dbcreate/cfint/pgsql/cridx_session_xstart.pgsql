@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/pgsql/cridx_session_xstart.pgsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

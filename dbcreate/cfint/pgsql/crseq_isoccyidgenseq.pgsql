@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/pgsql/crseq_isoccyidgenseq.pgsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

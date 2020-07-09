@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/pgsql/crtype_secapp_rec.pgsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

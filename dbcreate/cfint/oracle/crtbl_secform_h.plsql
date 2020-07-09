@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/oracle/crtbl_secform_h.plsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

@@ -2,7 +2,7 @@
 #
 #	@(#) dbcreate/cfint/db2luw/cridx_cfinet213_h.bash
 #
-#	com.github.msobkow.CFInt
+#	org.msscf.msscf.CFInt
 #
 #	Copyright (c) 2020 Mark Stephen Sobkow
 #	

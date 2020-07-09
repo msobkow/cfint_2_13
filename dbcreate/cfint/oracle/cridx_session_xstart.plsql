@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/oracle/cridx_session_xstart.plsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

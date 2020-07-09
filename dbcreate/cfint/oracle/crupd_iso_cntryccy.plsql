@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/oracle/crupd_iso_cntryccy.plsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

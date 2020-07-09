@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/mssql/crrel_iso_cntry.tsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

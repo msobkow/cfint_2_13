@@ -2,7 +2,7 @@
 // Description: C++18 XML SAX2 Element Handler implementation for Cluster
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

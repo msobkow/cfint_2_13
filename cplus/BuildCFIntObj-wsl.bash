@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#	com.github.msobkow.CFInt
+#	org.msscf.msscf.CFInt
 #
 #	Copyright (c) 2020 Mark Stephen Sobkow
 #	
@@ -33,50 +33,50 @@ pushd libcfint
 	fi
 popd
 pushd libcfint
-	if [ ! -d /usr/bin/msobkow ]; then
-		sudo mkdir /usr/include/msobkow
+	if [ ! -d /usr/bin/msscf ]; then
+		sudo mkdir /usr/include/msscf
 	fi
-	sudo chmod 755 /usr/bin/msobkow
-	if [ ! -d /usr/bin/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION} ]; then
-		sudo mkdir /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}
+	sudo chmod 755 /usr/bin/msscf
+	if [ ! -d /usr/bin/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION} ]; then
+		sudo mkdir /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
 	fi
-	sudo chmod 755 /usr/bin/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}
-	if [ ! -d /usr/include/msobkow ]; then
-		sudo mkdir /usr/include/msobkow
+	sudo chmod 755 /usr/bin/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
+	if [ ! -d /usr/include/msscf ]; then
+		sudo mkdir /usr/include/msscf
 	fi
-	sudo chmod 755 /usr/include/msobkow
-	if [ ! -d /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION} ]; then
-		sudo mkdir /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}
+	sudo chmod 755 /usr/include/msscf
+	if [ ! -d /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION} ]; then
+		sudo mkdir /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
 	fi
-	sudo chmod 755 /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}
-	if [ ! -d /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint ]; then
-		sudo mkdir /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint
+	sudo chmod 755 /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}
+	if [ ! -d /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint ]; then
+		sudo mkdir /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint
 	fi
-	sudo chmod 755 /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint
-	if [ ! -d /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj ]; then
-		sudo mkdir /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj
+	sudo chmod 755 /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint
+	if [ ! -d /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj ]; then
+		sudo mkdir /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj
 	fi
-	sudo chmod 755 /usr/include/msobkow/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj
+	sudo chmod 755 /usr/include/msscf/${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj
 	autoreconf -fi
 	aclocal
 	autoconf
 	automake
-	./configure --prefix=/usr --disable-static CFLAGS='-g3 -Og -D_DEBUG ' CXXFLAGS='-g3 -Og -D_DEBUG -std=c++2a -I/usr/include/msobkow/${MAJOR_VERSION).0.${MINOR_VERSION} -I/usr/include/msobkow/${MAJOR_VERSION).0.${MINOR_VERSION} '
-	#./configure --prefix=/usr --disable-static CFLAGS='-O2 -DNDEBUG ' CXXFLAGS='-O2 -DNDEBUG -std=c++2a -I/usr/include/msobkow/${MAJOR_VERSION).0.${MINOR_VERSION} -I/usr/include/msobkow/${MAJOR_VERSION).0.${MINOR_VERSION} '
+	./configure --prefix=/usr --disable-static CFLAGS='-g3 -Og -D_DEBUG ' CXXFLAGS='-g3 -Og -D_DEBUG -std=c++2a -I/usr/include/msscf/${MAJOR_VERSION).0.${MINOR_VERSION} -I/usr/include/msscf/${MAJOR_VERSION).0.${MINOR_VERSION} '
+	#./configure --prefix=/usr --disable-static CFLAGS='-O2 -DNDEBUG ' CXXFLAGS='-O2 -DNDEBUG -std=c++2a -I/usr/include/msscf/${MAJOR_VERSION).0.${MINOR_VERSION} -I/usr/include/msscf/${MAJOR_VERSION).0.${MINOR_VERSION} '
 	make clean
 	time make
 	sudo make install
 	sudo rm -Rf /usr/include/cfint*
-	sudo chmod 755 /usr/include/msobkow/
-	sudo chmod 755 /usr/include/msobkow//${MAJOR_VERSION}.0.${MINOR_VERSION}
-	sudo chmod 755 /usr/include/msobkow//${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint
-	sudo sh -c "cd /usr/include/msobkow//${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint && chmod 644 *.hpp"
-	sudo chmod 755 /usr/include/msobkow//${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj
-	sudo sh -c "cd /usr/include/msobkow//${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj && chmod 644 *.hpp"
+	sudo chmod 755 /usr/include/msscf/
+	sudo chmod 755 /usr/include/msscf//${MAJOR_VERSION}.0.${MINOR_VERSION}
+	sudo chmod 755 /usr/include/msscf//${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint
+	sudo sh -c "cd /usr/include/msscf//${MAJOR_VERSION}.0.${MINOR_VERSION}/cfint && chmod 644 *.hpp"
+	sudo chmod 755 /usr/include/msscf//${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj
+	sudo sh -c "cd /usr/include/msscf//${MAJOR_VERSION}.0.${MINOR_VERSION}/cfintobj && chmod 644 *.hpp"
 	#sudo chmod 755 /usr/bin/*cfint*
 	sudo chmod 755 /usr/lib/*cfint.la
 	sudo chmod 755 /usr/lib/*cfint.so*
-	sudo chmod 755 /usr/share/msobkow/
-	sudo chmod 755 /usr/share/msobkow//${MAJOR_VERSION}.0.${MINOR_VERSION}
+	sudo chmod 755 /usr/share/msscf/
+	sudo chmod 755 /usr/share/msscf//${MAJOR_VERSION}.0.${MINOR_VERSION}
 	sudo ldconfig
 popd

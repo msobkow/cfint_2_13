@@ -14,9 +14,9 @@ DEPDIR=debug
 
 LT_OBJDIR=.libs
 
-BIN=$(prefix)/bin/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION)
+BIN=$(prefix)/bin/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION)
 
-bindir=$(prefix)/bin/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION)
+bindir=$(prefix)/bin/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION)
 
 libcfintramdir=${libdir}
 
@@ -24,7 +24,7 @@ libcfintram_LTLIBRARIES=libcfintram.la
 
 libcfintram_ladir=
 
-libcfintram_la_COREdir=$(prefix)/include/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION)/cfintram
+libcfintram_la_COREdir=$(prefix)/include/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION)/cfintram
 
 libcfintram_la_SOURCES= CFIntRamSchema.cpp CFIntRamPublic.cpp  CFIntRamClusterTable.cpp CFIntRamClusterId32Gen.cpp CFIntRamClusterId64Gen.cpp CFIntRamHostNodeTable.cpp CFIntRamISOCcyTable.cpp CFIntRamISOCtryTable.cpp CFIntRamISOCtryCcyTable.cpp CFIntRamISOCtryLangTable.cpp CFIntRamISOLangTable.cpp CFIntRamISOTZoneTable.cpp CFIntRamLicenseTable.cpp CFIntRamMajorVersionTable.cpp CFIntRamMimeTypeTable.cpp CFIntRamMinorVersionTable.cpp CFIntRamSecAppTable.cpp CFIntRamSecDeviceTable.cpp CFIntRamSecFormTable.cpp CFIntRamSecGroupTable.cpp CFIntRamSecGroupFormTable.cpp CFIntRamSecGrpIncTable.cpp CFIntRamSecGrpMembTable.cpp CFIntRamSecSessionTable.cpp CFIntRamSecUserTable.cpp CFIntRamServiceTable.cpp CFIntRamServiceTypeTable.cpp CFIntRamSubProjectTable.cpp CFIntRamSysClusterTable.cpp CFIntRamTSecGroupTable.cpp CFIntRamTSecGrpIncTable.cpp CFIntRamTSecGrpMembTable.cpp CFIntRamTenantTable.cpp CFIntRamTenantId32Gen.cpp CFIntRamTenantId64Gen.cpp CFIntRamTldTable.cpp CFIntRamTopDomainTable.cpp CFIntRamTopProjectTable.cpp CFIntRamURLProtocolTable.cpp
 
@@ -34,6 +34,6 @@ libcfintram_la_CORE_HEADERS= cfintram/CFIntRamSchema.hpp cfintram/CFIntRamPublic
 
 libcfintram_la_LDFLAGS= -version-info $(MAJOR_VERSION):$(MINOR_VERSION) -lmpfr -lxerces-c -luuid -l:libcflib.so.$(MAJOR_VERSION).0.$(MINOR_VERSION) -l:libcfint.so.$(MAJOR_VERSION).0.$(MINOR_VERSION) -l:libcfintsaxloader.so.$(MAJOR_VERSION).0.$(MINOR_VERSION) -l:libcfsec.so.$(MAJOR_VERSION).0.$(MINOR_VERSION) -l:libcfsecsaxloader.so.$(MAJOR_VERSION).0.$(MINOR_VERSION) -lstdc++fs
 
-libcfintram_la_CXXFLAGS= -I$(top_srcdir) -I$(prefix)/include/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION) -I$(prefix)/include/msobkow/$(MAJOR_VERSION).0.$(MINOR_VERSION)
+libcfintram_la_CXXFLAGS= -I$(top_srcdir) -I$(prefix)/include/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION) -I$(prefix)/include/msscf/$(MAJOR_VERSION).0.$(MINOR_VERSION)
 
 ACLOCAL_AMFLAGS= -Im4

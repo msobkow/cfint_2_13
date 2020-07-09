@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/pgsql/crtbl_secgrp_h.pgsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

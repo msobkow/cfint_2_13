@@ -1,7 +1,7 @@
 // Description: C++18 XML SAX Parser implementation for CFInt.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	
@@ -191,7 +191,7 @@ namespace cfint {
 
 	const std::string CFIntSaxLoader::CLASS_NAME( "CFIntSaxLoader" );
 	const std::string CFIntSaxLoader::SCHEMA_XMLNS( "uri://cfint/cfintloader" );
-	const std::string CFIntSaxLoader::SCHEMA_URI( "/usr/share/msobkow/2.0.13/xsd/cfint-structured.xsd" );
+	const std::string CFIntSaxLoader::SCHEMA_URI( "/usr/share/msscf/2.0.13/xsd/cfint-structured.xsd" );
 	bool CFIntSaxLoader::grammarLoaded = false;
 
 	CFIntSaxLoader::CFIntSaxLoader()

@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/db2luw/crtbl_clus_idg64.sql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

@@ -3,7 +3,7 @@
 // Description: C++18 Interface for an declementation of an in-memory RAM CFInt schema.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

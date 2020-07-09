@@ -1,7 +1,7 @@
 // Description: C++18 implementation of a generic CFInt history primary key base object.
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

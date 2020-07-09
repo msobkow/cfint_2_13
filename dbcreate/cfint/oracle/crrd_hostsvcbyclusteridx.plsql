@@ -1,7 +1,7 @@
 --
 --	@(#) dbcreate/cfint/oracle/crrd_hostsvcbyclusteridx.plsql
 --
---	com.github.msobkow.CFInt
+--	org.msscf.msscf.CFInt
 --
 --	Copyright (c) 2020 Mark Stephen Sobkow
 --	

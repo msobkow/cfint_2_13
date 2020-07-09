@@ -3,7 +3,7 @@
 // Description: C++18 XML SAX2 Element Handler specification for MimeType
 
 /*
- *	com.github.msobkow.CFInt
+ *	org.msscf.msscf.CFInt
  *
  *	Copyright (c) 2020 Mark Stephen Sobkow
  *	

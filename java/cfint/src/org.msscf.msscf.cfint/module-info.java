@@ -16,11 +16,11 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfint {
-	exports com.github.msobkow.cfint.CFInt;
-	exports com.github.msobkow.cfint.CFIntObj;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
+module org.msscf.msscf.cfint {
+	exports org.msscf.msscf.cfint.CFInt;
+	exports org.msscf.msscf.cfint.CFIntObj;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires org.apache.commons.io;

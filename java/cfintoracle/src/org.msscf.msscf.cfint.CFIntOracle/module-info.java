@@ -16,12 +16,12 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfint.CFIntOracle {
-	exports com.github.msobkow.cfint.CFIntOracle;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfint;
-	requires transitive com.github.msobkow.cfint.CFIntSaxLoader;
+module org.msscf.msscf.cfint.CFIntOracle {
+	exports org.msscf.msscf.cfint.CFIntOracle;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfint;
+	requires transitive org.msscf.msscf.cfint.CFIntSaxLoader;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires transitive java.naming;

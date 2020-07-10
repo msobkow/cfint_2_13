@@ -16,20 +16,20 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfint.CFIntXMsgSrvWar {
-	exports com.github.msobkow.cfint.CFIntXMsgSrvWar;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfint;
-	requires transitive com.github.msobkow.cfint.CFIntSaxLoader;
-	requires transitive com.github.msobkow.cfint.CFIntDb2LUW;
-	requires transitive com.github.msobkow.cfint.CFIntMSSql;
-	requires transitive com.github.msobkow.cfint.CFIntMySql;
-	requires transitive com.github.msobkow.cfint.CFIntOracle;
-	requires transitive com.github.msobkow.cfint.CFIntPgSql;
-	requires transitive com.github.msobkow.cfint.CFIntRam;
-	requires transitive com.github.msobkow.cfint.CFIntXMsg;
-	requires transitive com.github.msobkow.cfint.CFIntXMsgRqst;
+module org.msscf.msscf.cfint.CFIntXMsgSrvWar {
+	exports org.msscf.msscf.cfint.CFIntXMsgSrvWar;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfint;
+	requires transitive org.msscf.msscf.cfint.CFIntSaxLoader;
+	requires transitive org.msscf.msscf.cfint.CFIntDb2LUW;
+	requires transitive org.msscf.msscf.cfint.CFIntMSSql;
+	requires transitive org.msscf.msscf.cfint.CFIntMySql;
+	requires transitive org.msscf.msscf.cfint.CFIntOracle;
+	requires transitive org.msscf.msscf.cfint.CFIntPgSql;
+	requires transitive org.msscf.msscf.cfint.CFIntRam;
+	requires transitive org.msscf.msscf.cfint.CFIntXMsg;
+	requires transitive org.msscf.msscf.cfint.CFIntXMsgRqst;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires transitive java.naming;

@@ -16,21 +16,21 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfintcust.CFIntCustHttp {
-	exports com.github.msobkow.cfintcust.CFIntCustHttp;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cflib.CFLib.JavaFX;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfint;
-	requires transitive com.github.msobkow.cfint.CFIntSaxLoader;
-	requires transitive com.github.msobkow.cfsec.CFSecSaxLoader;
-	requires transitive com.github.msobkow.cfint.CFIntJavaFX;
-	requires transitive com.github.msobkow.cfsec.CFSecJavaFX;
-	requires transitive com.github.msobkow.cfint.CFIntXMsg;
-	requires transitive com.github.msobkow.cfint.CFIntXMsgRspn;
-	requires transitive com.github.msobkow.cfint.CFIntXMsgClnt;
-	requires transitive com.github.msobkow.cfseccust.CFSecCust;
-	requires transitive com.github.msobkow.cfintcust.CFIntCust;
+module org.msscf.msscf.cfintcust.CFIntCustHttp {
+	exports org.msscf.msscf.cfintcust.CFIntCustHttp;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cflib.CFLib.JavaFX;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfint;
+	requires transitive org.msscf.msscf.cfint.CFIntSaxLoader;
+	requires transitive org.msscf.msscf.cfsec.CFSecSaxLoader;
+	requires transitive org.msscf.msscf.cfint.CFIntJavaFX;
+	requires transitive org.msscf.msscf.cfsec.CFSecJavaFX;
+	requires transitive org.msscf.msscf.cfint.CFIntXMsg;
+	requires transitive org.msscf.msscf.cfint.CFIntXMsgRspn;
+	requires transitive org.msscf.msscf.cfint.CFIntXMsgClnt;
+	requires transitive org.msscf.msscf.cfseccust.CFSecCust;
+	requires transitive org.msscf.msscf.cfintcust.CFIntCust;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires org.apache.commons.io;

@@ -16,17 +16,17 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfintcust.CFIntCust {
-	exports com.github.msobkow.cfintcust.CFIntCust;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cflib.CFLib.JavaFX;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfint;
-	requires transitive com.github.msobkow.cfsec.CFSecSaxLoader;
-	requires transitive com.github.msobkow.cfsec.CFSecJavaFX;
-	requires transitive com.github.msobkow.cfseccust.CFSecCust;
-	requires transitive com.github.msobkow.cfint.CFIntSaxLoader;
-	requires transitive com.github.msobkow.cfint.CFIntJavaFX;
+module org.msscf.msscf.cfintcust.CFIntCust {
+	exports org.msscf.msscf.cfintcust.CFIntCust;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cflib.CFLib.JavaFX;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfint;
+	requires transitive org.msscf.msscf.cfsec.CFSecSaxLoader;
+	requires transitive org.msscf.msscf.cfsec.CFSecJavaFX;
+	requires transitive org.msscf.msscf.cfseccust.CFSecCust;
+	requires transitive org.msscf.msscf.cfint.CFIntSaxLoader;
+	requires transitive org.msscf.msscf.cfint.CFIntJavaFX;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires org.apache.commons.io;

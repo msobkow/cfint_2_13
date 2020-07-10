@@ -16,13 +16,13 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfint.CFIntXMsgRqst {
-	exports com.github.msobkow.cfint.CFIntXMsgRqst;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfint;
-	requires transitive com.github.msobkow.cfint.CFIntSaxLoader;
-	requires transitive com.github.msobkow.cfint.CFIntXMsg;
+module org.msscf.msscf.cfint.CFIntXMsgRqst {
+	exports org.msscf.msscf.cfint.CFIntXMsgRqst;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfint;
+	requires transitive org.msscf.msscf.cfint.CFIntSaxLoader;
+	requires transitive org.msscf.msscf.cfint.CFIntXMsg;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires org.apache.commons.io;

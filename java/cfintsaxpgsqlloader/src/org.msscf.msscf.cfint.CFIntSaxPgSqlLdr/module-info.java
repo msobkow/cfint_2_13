@@ -16,13 +16,13 @@
  *	limitations under the License.
  */
 
-module com.github.msobkow.cfint.CFIntSaxPgSqlLdr {
-	exports com.github.msobkow.cfint.CFIntSaxPgSqlLdr;
-	requires transitive com.github.msobkow.cflib.CFLib;
-	requires transitive com.github.msobkow.cfsec;
-	requires transitive com.github.msobkow.cfint;
-	requires transitive com.github.msobkow.cfint.CFIntSaxLoader;
-	requires transitive com.github.msobkow.cfint.CFIntPgSql;
+module org.msscf.msscf.cfint.CFIntSaxPgSqlLdr {
+	exports org.msscf.msscf.cfint.CFIntSaxPgSqlLdr;
+	requires transitive org.msscf.msscf.cflib.CFLib;
+	requires transitive org.msscf.msscf.cfsec;
+	requires transitive org.msscf.msscf.cfint;
+	requires transitive org.msscf.msscf.cfint.CFIntSaxLoader;
+	requires transitive org.msscf.msscf.cfint.CFIntPgSql;
 	requires transitive java.rmi;
 	requires transitive java.sql;
 	requires transitive java.naming;

@@ -54,11 +54,11 @@ public class CFIntXMsgRspn
 	public final static String	SCHEMA_XMLNS = "uri://xsd/cfintrspn";
 
 	// The source for loading the supported schema
-	public final static String	SCHEMA_URI = "../bin/xsd/cfint-rspn.xsd";
-	public final static String	SCHEMA_ROOT_URI = "/xsd/cfint-rspn.xsd";
+	public final static String	SCHEMA_URI = "/opt/msscf/2.0.13/xsd/cfint-rspn.xsd";
+	public final static String	SCHEMA_ROOT_URI = "/xsd/cfint-rqst.rspn";
 	public final static String CFSEC_XMLNS = "uri://xsd/cfsecrspn";
-	public final static String CFSEC_URI = "../bin/xsd/cfsec-rspn.xsd";
-	public final static String CFSEC_ROOT_URI = "xsd/cfsec-rspn.xsd";
+	public final static String CFSEC_URI = "/opt/msscf/2.0.13/xsd/cfsec-rspn.xsd";
+	public final static String CFSEC_ROOT_URI = "/xsd/cfsec-rspn.xsd";
 
 	protected static Grammar myGrammar = null;
 

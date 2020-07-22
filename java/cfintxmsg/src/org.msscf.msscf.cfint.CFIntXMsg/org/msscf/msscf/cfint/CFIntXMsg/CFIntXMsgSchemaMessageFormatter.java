@@ -70,10 +70,10 @@ public class CFIntXMsgSchemaMessageFormatter
 		String retval =
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
 			+	"<CFIntRqst\n"
-			+	"\t\txmlns=\"uri://cfint/cfintrqst\"\n"
+			+	"\t\txmlns=\"uri://org.msscf/msscf/2.0.13/cfintrqst\"\n"
 			+	"\t\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
 			+	"\t\txmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n"
-			+	"\t\txsi:schemaLocation=\"uri://cfint/cfintrqst file:../bin/xsd/cfint-rqst.xsd\" >";
+			+	"\t\txsi:schemaLocation=\"uri://org.msscf/msscf/2.0.13/cfintrqst file:../bin/xsd/cfint-rqst.xsd\" >";
 		return( retval );
 	}
 

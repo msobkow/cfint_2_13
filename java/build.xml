@@ -11,23 +11,11 @@
 	<property name="apachejars" location="../../stdjar/apache.org" />
 	<property name="eclipsejars" location="../../stdjar/eclipse.org" />
 	<property name="javaeejars" location="../../stdjar/javaee.github.io" />
-	<property name="db2jars" location="../../stdjar/proprietary/db2.ibm.com" />
-	<property name="mssqljars" location="../../stdjar/proprietary/mssql.microsoft.com/sqljdbc_8.2/enu" />
-	<property name="mysqljars" location="../../stdjar/mysql.oracle.com" />
-	<property name="oraclejars" location="../../stdjar/proprietary/oracle.com" />
 	<property name="pgsqljars" location="../../stdjar/postgresql.org" />
 	<property name="cfintsrc" location="cfint/src" />
 	<property name="cfintramsrc" location="cfintram/src" />
-	<property name="cfintdb2luwsrc" location="cfintdb2luw/src" />
-	<property name="cfintmssqlsrc" location="cfintmssql/src" />
-	<property name="cfintmysqlsrc" location="cfintmysql/src" />
-	<property name="cfintoraclesrc" location="cfintoracle/src" />
 	<property name="cfintpgsqlsrc" location="cfintpgsql/src" />
 	<property name="cfintsaxloadersrc" location="cfintsaxloader/src" />
-	<property name="cfintsaxdb2luwloadersrc" location="cfintsaxdb2luwloader/src" />
-	<property name="cfintsaxmssqlloadersrc" location="cfintsaxmssqlloader/src" />
-	<property name="cfintsaxmysqlloadersrc" location="cfintsaxmysqlloader/src" />
-	<property name="cfintsaxoracleloadersrc" location="cfintsaxoracleloader/src" />
 	<property name="cfintsaxpgsqlloadersrc" location="cfintsaxpgsqlloader/src" />
 	<property name="cfintsaxramloadersrc" location="cfintsaxramloader/src" />
 	<property name="cfintxmsgsrc" location="cfintxmsg/src" />
@@ -76,19 +64,6 @@
 			<fileset dir="${eclipsejars}">
 				<include name="org.eclipse.wst.xml.xpath2.processor_1.2.0.jar" />
 			</fileset>
-			<fileset dir="${db2jars}">
-				<include name="db2jcc4.jar" />
-				<include name="db2jcc_license_cu.jar" />
-			</fileset>
-			<fileset dir="${mssqljars}">
-				<include name="mssql-jdbc-8.2.0.jre13.jar" />
-			</fileset>
-			<fileset dir="${mysqljars}">
-				<include name="mysql-connector-java-8.0.19.jar" />
-			</fileset>
-			<fileset dir="${oraclejars}">
-				<include name="ojdbc10.jar" />
-			</fileset>
 			<fileset dir="${pgsqljars}">
 				<include name="postgresql-42.2.10.jar" />
 			</fileset>
@@ -103,11 +78,6 @@
 		<move file="${lib}/org.apache.httpcomponents.httpclient-4.5.11.jar" tofile="${lib}/org.apache.httpcomponents.httpclient.jar" />
 		<move file="${lib}/org.apache.httpcomponents.httpcore-4.4.13.jar" tofile="${lib}/org.apache.httpcomponents.httpcore.jar" />
 		<move file="${lib}/org.eclipse.wst.xml.xpath2.processor_1.2.0.jar" tofile="${lib}/org.eclipse.wst.xml.xpath2.processor.jar" />
-		<move file="${lib}/db2jcc4.jar" tofile="${lib}/db2jcc.jar" />
-		<move file="${lib}/db2jcc_license_cu.jar" tofile="${lib}/com.ibm.db2.jcc.licenses.jar" />
-		<!-- move file="${lib}/mssql-jdbc-8.2.0.jre13.jar" tofile="${lib}/com.microsoft.sqlserver.jar" / -->
-		<move file="${lib}/mysql-connector-java-8.0.19.jar" tofile="${lib}/com.mysql.jdbc.jar" />
-		<move file="${lib}/ojdbc10.jar" tofile="${lib}/oracle.jar" />
 		<move file="${lib}/postgresql-42.2.10.jar" tofile="${lib}/org.postgresql.jar" />
 		<copy todir="${bin}">
 			<fileset dir="../../cflib_2_13/java/bin">
@@ -248,90 +218,6 @@
 
 	<!-- Build the various JDBC Persistence Implementations -->
 
-	<target name="compiledb2luw" depends="corejar,saxloaderjar" description="Compile the db2luw package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintdb2luwsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
-			<compilerarg value="-Xlint:unchecked" />
-			<compilerarg value="-Xlint:deprecation" />
-		</javac>
-	</target>
-
-	<target name="db2luwjar" depends="compiledb2luw" description="Package the db2luw jar">
-		<jar jarfile="${bin}/org.msscf.msscf.cfint.CFIntDb2LUW.jar" basedir="${build}/org.msscf.msscf.cfint.CFIntDb2LUW" >
-			<include name="*.class" />
-			<include name="org/msscf/msscf/cfint/CFIntDb2LUW/*.class" />
-			<manifest>
-				<attribute name="Codebase" value="org.msscf.msscf.cfint.CFIntDb2LUW" />
-				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
-				<attribute name="Implementation-Title" value="MSS Code Factory CFInt DB/2 LUW Persistence Implementation" />
-				<attribute name="Implementation-Version" value="2.13"/>
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="compilemssql" depends="corejar,saxloaderjar" description="Compile the mssql package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintmssqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
-			<compilerarg value="-Xlint:unchecked" />
-			<compilerarg value="-Xlint:deprecation" />
-		</javac>
-	</target>
-
-	<target name="mssqljar" depends="compilemssql" description="Package the mssql jar">
-		<jar jarfile="${bin}/org.msscf.msscf.cfint.CFIntMSSql.jar" basedir="${build}/org.msscf.msscf.cfint.CFIntMSSql" >
-			<include name="*.class" />
-			<include name="org/msscf/msscf/cfint/CFIntMSSql/*.class" />
-			<manifest>
-				<attribute name="Codebase" value="org.msscf.msscf.cfint.CFIntMSSql" />
-				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
-				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Microsoft SQL Server Persistence Implementation" />
-				<attribute name="Implementation-Version" value="2.13"/>
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="compilemysql" depends="corejar,saxloaderjar" description="Compile the mysql package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintmysqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
-			<compilerarg value="-Xlint:unchecked" />
-			<compilerarg value="-Xlint:deprecation" />
-		</javac>
-	</target>
-
-	<target name="mysqljar" depends="compilemysql" description="Package the mysql jar">
-		<jar jarfile="${bin}/org.msscf.msscf.cfint.CFIntMySql.jar" basedir="${build}/org.msscf.msscf.cfint.CFIntMySql" >
-			<include name="*.class" />
-			<include name="org/msscf/msscf/cfint/CFIntMySql/*.class" />
-			<manifest>
-				<attribute name="Codebase" value="org.msscf.msscf.cfint.CFIntMySql" />
-				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
-				<attribute name="Implementation-Title" value="MSS Code Factory CFInt MySql Persistence Implementation" />
-				<attribute name="Implementation-Version" value="2.13"/>
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="compileoracle" depends="corejar,saxloaderjar" description="Compile the oracle package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintoraclesrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
-			<compilerarg value="-Xlint:unchecked" />
-			<compilerarg value="-Xlint:deprecation" />
-		</javac>
-	</target>
-
-	<target name="oraclejar" depends="compileoracle" description="Package the oracle jar">
-		<jar jarfile="${bin}/org.msscf.msscf.cfint.CFIntOracle.jar" basedir="${build}/org.msscf.msscf.cfint.CFIntOracle" >
-			<include name="*.class" />
-			<include name="org/msscf/msscf/cfint/CFIntOracle/*.class" />
-			<manifest>
-				<attribute name="Codebase" value="org.msscf.msscf.cfint.CFIntOracle" />
-				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
-				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Oracle Persistence Implementation" />
-				<attribute name="Implementation-Version" value="2.13"/>
-			</manifest>
-		</jar>
-	</target>
-
 	<target name="compilepgsql" depends="corejar,saxloaderjar" description="Compile the pgsql package">
 		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintpgsqlsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
@@ -354,90 +240,6 @@
 	</target>
 
 	<!-- Build the SAX Ldr Executables -->
-
-	<target name="compilesaxdb2luwloader" depends="corejar,saxloaderjar,db2luwjar" description="Compile the saxdb2luwloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxdb2luwloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntDb2LUW.jar:${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
-			<compilerarg value="-Xlint:unchecked" />
-			<compilerarg value="-Xlint:deprecation" />
-		</javac>
-	</target>
-
-	<target name="saxdb2luwloaderjar" depends="compilesaxdb2luwloader" description="Package the saxdb2luwloader executable">
-		<jar jarfile="${bin}/org.msscf.msscf.cfint.CFIntSaxDb2LUWLdr.jar" basedir="${build}/org.msscf.msscf.cfint.CFIntSaxDb2LUWLdr" >
-			<include name="*.class" />
-			<include name="org/msscf/msscf/cfint/CFIntSaxDb2LUWLdr/*.class" />
-			<manifest>
-				<attribute name="Codebase" value="org.msscf.msscf.cfint.CFIntSaxDb2LUWLdr" />
-				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
-				<attribute name="Implementation-Title" value="MSS Code Factory CFInt DB/2 LUW SAX Ldr Executable" />
-				<attribute name="Implementation-Version" value="2.13"/>
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="compilesaxmssqlloader" depends="compilesaxloader,compilemysql" description="Compile the saxmssqlloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxmssqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntMSSql.jar:${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
-			<compilerarg value="-Xlint:unchecked" />
-			<compilerarg value="-Xlint:deprecation" />
-		</javac>
-	</target>
-
-	<target name="saxmssqlloaderjar" depends="compilesaxmssqlloader" description="Package the saxmssqlloader executable">
-		<jar jarfile="${bin}/org.msscf.msscf.cfint.CFIntSaxMSSqlLdr.jar" basedir="${build}/org.msscf.msscf.cfint.CFIntSaxMSSqlLdr" >
-			<include name="*.class" />
-			<include name="org/msscf/msscf/cfint/CFIntSaxMSSqlLdr/*.class" />
-			<manifest>
-				<attribute name="Codebase" value="org.msscf.msscf.cfint.CFIntSaxMSSqlLdr" />
-				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
-				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Microsoft SQL Server SAX Ldr Executable" />
-				<attribute name="Implementation-Version" value="2.13"/>
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="compilesaxmysqlloader" depends="corejar,saxloaderjar,mysqljar" description="Compile the saxmysqlloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxmysqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntMySql.jar:${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
-			<compilerarg value="-Xlint:unchecked" />
-			<compilerarg value="-Xlint:deprecation" />
-		</javac>
-	</target>
-
-	<target name="saxmysqlloaderjar" depends="compilesaxmysqlloader" description="Package the saxmysqlloader executable">
-		<jar jarfile="${bin}/org.msscf.msscf.cfint.CFIntSaxMySqlLdr.jar" basedir="${build}/org.msscf.msscf.cfint.CFIntSaxMySqlLdr" >
-			<include name="*.class" />
-			<include name="org/msscf/msscf/cfint/CFIntSaxMySqlLdr/*.class" />
-			<manifest>
-				<attribute name="Codebase" value="org.msscf.msscf.cfint.CFIntSaxMySqlLdr" />
-				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
-				<attribute name="Implementation-Title" value="MSS Code Factory CFInt MySql SAX Ldr Executable" />
-				<attribute name="Implementation-Version" value="2.13"/>
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="compilesaxoracleloader" depends="compilesaxloader,compileoracle" description="Compile the saxoracleloader package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxoracleloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntOracle.jar:${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
-			<compilerarg value="-Xlint:unchecked" />
-			<compilerarg value="-Xlint:deprecation" />
-		</javac>
-	</target>
-
-	<target name="saxoracleloaderjar" depends="compilesaxoracleloader" description="Package the saxoracleloader executable">
-		<jar jarfile="${bin}/org.msscf.msscf.cfint.CFIntSaxOracleLdr.jar" basedir="${build}/org.msscf.msscf.cfint.CFIntSaxOracleLdr" >
-			<include name="*.class" />
-			<include name="org/msscf/msscf/cfint/CFIntSaxOracleLdr/*.class" />
-			<manifest>
-				<attribute name="Codebase" value="org.msscf.msscf.cfint.CFIntSaxOracleLdr" />
-				<attribute name="Built-By" value="${user.name}" />
-				<attribute name="Implementation-Vendor" value="Mark Stephen Sobkow" />
-				<attribute name="Implementation-Title" value="MSS Code Factory CFInt Oracle SAX Ldr Executable" />
-				<attribute name="Implementation-Version" value="2.13"/>
-			</manifest>
-		</jar>
-	</target>
 
 	<target name="compilesaxpgsqlloader" depends="corejar,saxloaderjar,pgsqljar" description="Compile the saxpgsqlloader package">
 		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsaxpgsqlloadersrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntPgSql.jar:${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${lib}">
@@ -648,10 +450,10 @@
 
 	<!-- Tie all the code so far together and copy the JARS to the WARs -->
 
-	<target name="compileall" depends="compilecore,compilesaxloader,compileram,compiledb2luw,compilemssql,compilemysql,compileoracle,compilepgsql,compilesaxdb2luwloader,compilesaxmssqlloader,compilesaxmysqlloader,compilesaxoracleloader,compilesaxpgsqlloader,compilesaxramloader,compilexmsg,compilexmsgrqst,compilexmsgrspn,compilexmsgclnt,compilejavafx,compilecust,compilecusthttp">
+	<target name="compileall" depends="compilecore,compilesaxloader,compileram,compilepgsql,compilesaxpgsqlloader,compilesaxramloader,compilexmsg,compilexmsgrqst,compilexmsgrspn,compilexmsgclnt,compilejavafx,compilecust,compilecusthttp">
 	</target>
 
-	<target name="alljars" depends="corejar,saxloaderjar,ramjar,db2luwjar,mssqljar,mysqljar,oraclejar,pgsqljar,saxdb2luwloaderjar,saxmssqlloaderjar,saxmysqlloaderjar,saxoracleloaderjar,saxpgsqlloaderjar,saxramloaderjar,xmsgjar,xmsgrqstjar,xmsgrspnjar,xmsgclntjar,javafxjar,custjar,custhttpjar">
+	<target name="alljars" depends="corejar,saxloaderjar,ramjar,pgsqljar,saxpgsqlloaderjar,saxramloaderjar,xmsgjar,xmsgrqstjar,xmsgrspnjar,xmsgclntjar,javafxjar,custjar,custhttpjar">
 		<copy todir="cfintsmwar/WebContent/WEB-INF/lib">
 			<fileset dir="${lib}">
 				<include name="org.apache.commons.codec.jar" />
@@ -663,11 +465,6 @@
 				<include name="org.apache.xercesImpl.xml.schema.jar" />
 				<include name="org.eclipse.wst.xml.xpath2.processor.jar" />
 				<!-- Install these to the Web Server directly - needed for specifying JDBC connection resources -->
-				<!-- include name="db2jcc.jar" / -->
-				<!-- include name="com.ibm.db2.jcc.licenses.jar" / -->
-				<!-- include name="mssql-jdbc.jar" / -->
-				<!-- include name="com.mysql.jdbc.jar" / -->
-				<!-- include name="oracle.jar" / -->
 				<!-- include name="org.postgresql.jar" / -->
 			</fileset>
 			<fileset dir="${bin}">
@@ -675,10 +472,6 @@
 				<include name="org.msscf.msscf.cfsec.jar" />
 				<include name="org.msscf.msscf.cfint.jar" />
 				<include name="org.msscf.msscf.cfint.CFIntSaxLoader.jar" />
-				<include name="org.msscf.msscf.cfint.CFIntDb2luw.jar" />
-				<include name="org.msscf.msscf.cfint.CFIntMSSql.jar" />
-				<include name="org.msscf.msscf.cfint.CFIntMySql.jar" />
-				<include name="org.msscf.msscf.cfint.CFIntOracle.jar" />
 				<include name="org.msscf.msscf.cfint.CFIntPgSql.jar" />
 			</fileset>
 		</copy>
@@ -693,11 +486,6 @@
 				<include name="org.apache.xercesImpl.xml.schema.jar" />
 				<include name="org.eclipse.wst.xml.xpath2.processor.jar" />
 				<!-- Install these to the Web Server directly - needed for specifying JDBC connection resources -->
-				<!-- include name="db2jcc.jar" / -->
-				<!-- include name="com.ibm.db2.jcc.licenses.jar" / -->
-				<!-- include name="mssql-jdbc.jar" / -->
-				<!-- include name="com.mysql.jdbc.jar" / -->
-				<!-- include name="oracle.jar" / -->
 				<!-- include name="org.postgresql.jar" / -->
 			</fileset>
 			<fileset dir="${bin}">
@@ -705,7 +493,6 @@
 				<include name="org.msscf.msscf.cfsec.jar" />
 				<include name="org.msscf.msscf.cfint.jar" />
 				<include name="org.msscf.msscf.cfint.CFIntSaxLoader.jar" />
-				<include name="org.msscf.msscf.cfint.CFIntDb2luw.jar" />
 				<include name="org.msscf.msscf.cfint.CFIntMSSql.jar" />
 				<include name="org.msscf.msscf.cfint.CFIntMySql.jar" />
 				<include name="org.msscf.msscf.cfint.CFIntOracle.jar" />
@@ -719,7 +506,7 @@
 	<!-- Compile the Int Management WAR to be deployed via Tomcat HTTPS -->
 
 	<target name="compilesmwar" depends="alljars" description="Compile the smwar package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsmwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntDb2LUW.jar:${bin}/org.msscf.msscf.cfint.CFIntMSSql.jar:${bin}/org.msscf.msscf.cfint.CFIntMySql.jar:${bin}/org.msscf.msscf.cfint.CFIntOracle.jar:${bin}/org.msscf.msscf.cfint.CFIntPgSql.jar:${bin}/org.msscf.msscf.cfint.CFIntRam.jar:${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${tomcatlib}:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintsmwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntPgSql.jar:${bin}/org.msscf.msscf.cfint.CFIntRam.jar:${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${tomcatlib}:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
@@ -728,7 +515,7 @@
 	<!-- Compile the X(ml)Msg Server WAR to be deployed via Tomcat HTTP -->
 
 	<target name="compilexmsgsrvwar" depends="alljars" description="Compile the xmsgsrvwar package">
-		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintxmsgsrvwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntDb2LUW.jar:${bin}/org.msscf.msscf.cfint.CFIntMSSql.jar:${bin}/org.msscf.msscf.cfint.CFIntMySql.jar:${bin}/org.msscf.msscf.cfint.CFIntOracle.jar:${bin}/org.msscf.msscf.cfint.CFIntPgSql.jar:${bin}/org.msscf.msscf.cfint.CFIntRam.jar:${bin}/org.msscf.msscf.cfint.CFIntXMsgRqst.jar:${bin}/org.msscf.msscf.cfint.CFIntXMsg.jar:${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${tomcatlib}:${lib}">
+		<javac debug="true" fork="true" memoryinitialsize="1024m" memorymaximumsize="1024m" includeantruntime="false" modulesourcepath="${cfintxmsgsrvwarsrc}" destdir="${build}" classpathref="Core.classpath" modulepath="${bin}/org.msscf.msscf.cfint.CFIntPgSql.jar:${bin}/org.msscf.msscf.cfint.CFIntRam.jar:${bin}/org.msscf.msscf.cfint.CFIntXMsgRqst.jar:${bin}/org.msscf.msscf.cfint.CFIntXMsg.jar:${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar:${bin}/org.msscf.msscf.cfint.jar:${bin}/org.msscf.msscf.cfsec.jar:${bin}/org.msscf.msscf.cflib.CFLib.jar:${tomcatlib}:${lib}">
 			<compilerarg value="-Xlint:unchecked" />
 			<compilerarg value="-Xlint:deprecation" />
 		</javac>
@@ -788,16 +575,8 @@
 		<delete file="${bin}/org.msscf.msscf.cfint.jar" />
 		<delete file="${bin}/org.msscf.msscf.cfint.CFIntSaxLoader.jar" />
 		<delete file="${bin}/org.msscf.msscf.cfint.CFIntMssCF.jar" />
-		<delete file="${bin}/org.msscf.msscf.cfint.CFIntDb2LUW.jar" />
-		<delete file="${bin}/org.msscf.msscf.cfint.CFIntMSSql.jar" />
-		<delete file="${bin}/org.msscf.msscf.cfint.CFIntMySql.jar" />
-		<delete file="${bin}/org.msscf.msscf.cfint.CFIntOracle.jar" />
 		<delete file="${bin}/org.msscf.msscf.cfint.CFIntPgSql.jar" />
 		<delete file="${bin}/org.msscf.msscf.cfint.CFIntRam.jar" />
-		<delete file="${bin}/org.msscf.msscf.cfint.CFIntSaxDb2LUWLdr.jar" />
-		<delete file="${bin}/org.msscf.msscf.cfint.CFIntSaxMSSqlLdr.jar" />
-		<delete file="${bin}/org.msscf.msscf.cfint.CFIntSaxMySqlLdr.jar" />
-		<delete file="${bin}/org.msscf.msscf.cfint.CFIntSaxOracleLdr.jar" />
 		<delete file="${bin}/org.msscf.msscf.cfint.CFIntSaxPgSqlLdr.jar" />
 		<delete file="${bin}/org.msscf.msscf.cfint.CFIntSaxRamLdr.jar" />
 		<delete file="${bin}/org.msscf.msscf.cfint.CFIntXMsg.jar" />
@@ -824,10 +603,6 @@
 		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.jar" />
 		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.jar" />
 		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntSaxLoader.jar" />
-		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntDb2LUW.jar" />
-		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntMSSql.jar" />
-		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntMySql.jar" />
-		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntOracle.jar" />
 		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntPgSql.jar" />
 		<delete file="cfintsmwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntRam.jar" />
 		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.apache.commons.codec.jar" />
@@ -842,10 +617,6 @@
 		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfsec.jar" />
 		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.jar" />
 		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntSaxLoader.jar" />
-		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntDb2LUW.jar" />
-		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntMSSql.jar" />
-		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntMySql.jar" />
-		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntOracle.jar" />
 		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntPgSql.jar" />
 		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntRam.jar" />
 		<delete file="cfintxmsgsrvwar/WebContent/WEB-INF/lib/org.msscf.msscf.cfint.CFIntXMsg.jar" />

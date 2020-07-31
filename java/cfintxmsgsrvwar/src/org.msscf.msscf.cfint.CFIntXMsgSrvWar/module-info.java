@@ -22,10 +22,6 @@ module org.msscf.msscf.cfint.CFIntXMsgSrvWar {
 	requires transitive org.msscf.msscf.cfsec;
 	requires transitive org.msscf.msscf.cfint;
 	requires transitive org.msscf.msscf.cfint.CFIntSaxLoader;
-	requires transitive org.msscf.msscf.cfint.CFIntDb2LUW;
-	requires transitive org.msscf.msscf.cfint.CFIntMSSql;
-	requires transitive org.msscf.msscf.cfint.CFIntMySql;
-	requires transitive org.msscf.msscf.cfint.CFIntOracle;
 	requires transitive org.msscf.msscf.cfint.CFIntPgSql;
 	requires transitive org.msscf.msscf.cfint.CFIntRam;
 	requires transitive org.msscf.msscf.cfint.CFIntXMsg;

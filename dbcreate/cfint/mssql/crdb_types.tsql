@@ -1,0 +1,150 @@
+--
+--	@(#) dbcreate/cfint/mssql/crdb_types.tsql
+--
+--	org.msscf.msscf.CFInt
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFInt 2.13 Internet Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfinet213
+go
+
+exec sp_addtype cfinet213ClassCode, "CHAR(4)"
+go
+
+exec sp_addtype CFINet213AuditActionEnum, "SMALLINT"
+go
+
+exec sp_addtype CFINet213ClusterIdGenSeq, "DECIMAL(21,0)"
+go
+exec sp_addtype CFINet213DeviceName, "VARCHAR(127)"
+go
+exec sp_addtype CFINet213ISO6391LangCode, "VARCHAR(2)"
+go
+exec sp_addtype CFINet213ISO6392LangCode, "VARCHAR(3)"
+go
+exec sp_addtype CFINet213ISOCcyCode, "VARCHAR(3)"
+go
+
+exec sp_addtype CFINet213ISOCcyIdGenSeq, "SMALLINT"
+go
+exec sp_addtype CFINet213ISOCtryCode, "VARCHAR(2)"
+go
+exec sp_addtype CFINet213ISOCtryCode3, "VARCHAR(3)"
+go
+
+exec sp_addtype CFINet213ISOCtryIdGenSeq, "SMALLINT"
+go
+
+exec sp_addtype CFINet213ISOLangIdGenSeq, "SMALLINT"
+go
+
+exec sp_addtype CFINet213ISOTZoneIdGenSeq, "SMALLINT"
+go
+exec sp_addtype CFINet213SHA512HexHash, "VARCHAR(256)"
+go
+exec sp_addtype CFINet213SecSessionIdGen, "CHAR(36)"
+go
+exec sp_addtype CFINet213SecUserIdGen, "CHAR(36)"
+go
+
+exec sp_addtype CFINet213ServiceTypeIdGenSeq, "INT"
+go
+
+exec sp_addtype CFINet213TenantIdGenSeq, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213HostNodeIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213SecAppIdGen, "INT"
+go
+
+exec sp_addtype CFINet213SecFormIdGen, "INT"
+go
+
+exec sp_addtype CFINet213SecGroupFormIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213SecGroupIdGen, "INT"
+go
+
+exec sp_addtype CFINet213SecGrpIncIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213SecGrpMembIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213ServiceIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213TSecGroupIdGen, "INT"
+go
+
+exec sp_addtype CFINet213TSecGrpIncIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213TSecGrpMembIdGen, "DECIMAL(21,0)"
+go
+exec sp_addtype CFINet213DomNameType, "VARCHAR(64)"
+go
+exec sp_addtype CFINet213DomainDescrType, "VARCHAR(1024)"
+go
+
+exec sp_addtype CFINet213LicenseIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213MajorVersionIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213MimeTypeIdGenSeq, "INT"
+go
+
+exec sp_addtype CFINet213MinorVersionIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213SubProjectIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213TldIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213TopDomainIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213TopProjectIdGen, "DECIMAL(21,0)"
+go
+
+exec sp_addtype CFINet213URLProtoIdGenSeq, "INT"
+go
+
+quit

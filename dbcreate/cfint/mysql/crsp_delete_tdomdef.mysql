@@ -1,0 +1,213 @@
+--
+--	@(#) dbcreate/cfint/mysql/crsp_delete_tdomdef.mysql
+--
+--	org.msscf.msscf.CFInt
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFInt 2.13 Internet Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+delimiter ////
+create procedure cfinet213.sp_delete_tdomdef(
+	argAuditClusterId bigint,
+	argAuditUserId varchar(36),
+	argAuditSessionId varchar(36),
+	secClusterId bigint,
+	secTenantId bigint,
+	argTenantId bigint,
+	argId bigint,
+	argRevision int )
+not deterministic
+modifies sql data
+begin
+	declare RowsAffected bigint;
+	declare oldTenantId bigint;
+	declare oldId bigint;
+	declare oldTldId bigint;
+	declare oldName varchar(64);
+	declare oldDescription varchar(1024);
+	declare oldRevision int;
+	declare permissionFlag boolean;
+	declare isSystemUser boolean;
+	declare done int default false;
+	declare delsubdomtopprojectTenantId bigint;
+	declare delsubdomtopprojectId bigint;
+	declare deltopdomlicenseTenantId bigint;
+	declare deltopdomlicenseId bigint;
+	declare cur_delsubdomtopproject cursor for
+		select
+			a108.tenantid,
+			a108.id
+		from cfinet213.tdomdef as a107
+			inner join cfinet213.tprjdef a108 on
+				a107.tenantid = a108.tenantid
+				and a107.id = a108.topdomainid
+		where
+			a107.tenantid = argTenantId
+			and a107.id = argId;
+	declare cur_deltopdomlicense cursor for
+		select
+			a101.tenantid,
+			a101.id
+		from cfinet213.tdomdef as a107
+			inner join cfinet213.licn a101 on
+				a107.tenantid = a101.tenantid
+				and a107.id = a101.topdomainid
+		where
+			a107.tenantid = argTenantId
+			and a107.id = argId;
+	declare continue handler for not found set done = true;
+	select
+			TenantId,
+		Id,
+		TldId,
+		safe_name,
+		descr,
+			revision
+	into
+		oldTenantId,
+			oldId,
+			oldTldId,
+			oldName,
+			oldDescription,
+		oldRevision
+	from cfinet213.tdomdef
+	where
+		TenantId = argTenantId
+		and Id = argId
+	for update;
+	if( oldTenantId != secTenantId )
+	then
+		select cfinet213.sp_is_system_user( argAuditUserId )
+		into permissionFlag;
+
+		if( permissionFlag = false )
+		then
+			signal sqlstate '45001'
+			set message_text = 'sp_delete_tdomdef() Permission denied, not identified as system',
+				schema_name = 'cfinet213',
+				table_name = 'tdomdef';
+		end if;
+	end if;
+
+	select cfinet213.sp_is_tenant_user( oldTenantId,
+			'DeleteTopDomain',
+			argAuditUserId ),
+		cfinet213.sp_is_system_user( argAuditUserId )
+	into permissionFlag, isSystemUser;
+
+	if( ( permissionFlag = false ) and ( isSystemUser = false ) )
+	then
+		signal sqlstate '45003'
+		set message_text = 'sp_delete_tdomdef() Permission denied, not granted access to DeleteTopDomain for current Tenant',
+			schema_name = 'cfinet213',
+			table_name = 'tdomdef';
+	end if;
+
+	insert into cfinet213.tdomdef_h (
+			tenantid,
+			id,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			tldid,
+			safe_name,
+			descr,
+			revision,
+			auditaction )
+		select
+			a107.tenantid,
+			a107.id,
+			argAuditClusterId,
+			argAuditSessionId,
+			now(),
+			a107.tldid,
+			a107.safe_name,
+			a107.descr,
+			a107.revision + 1,
+			3
+		from cfinet213.tdomdef as a107
+		where
+			a107.tenantid = argTenantId
+		and a107.id = argId;
+
+	set done = false;
+	open cur_delsubdomtopproject;
+	read_loop_delsubdomtopproject: loop
+		fetch cur_delsubdomtopproject into
+			delsubdomtopprojectTenantId,
+			delsubdomtopprojectId;
+		if done then
+			leave read_loop_delsubdomtopproject;
+		end if;
+		call cfinet213.sp_delete_tprjdef_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			delsubdomtopprojectTenantId,
+			delsubdomtopprojectId );
+	end loop;
+	close cur_delsubdomtopproject;
+	set done = false;
+	open cur_deltopdomlicense;
+	read_loop_deltopdomlicense: loop
+		fetch cur_deltopdomlicense into
+			deltopdomlicenseTenantId,
+			deltopdomlicenseId;
+		if done then
+			leave read_loop_deltopdomlicense;
+		end if;
+		call cfinet213.sp_delete_licn_by_ididx( argAuditClusterId,
+			argAuditUserId,
+			argAuditSessionId,
+			secClusterId,
+			secTenantId,
+			deltopdomlicenseTenantId,
+			deltopdomlicenseId );
+	end loop;
+	close cur_deltopdomlicense;
+	delete from cfinet213.tdomdef
+	where
+		tenantid = argTenantId
+		and id = argId;
+	select row_count()
+	into RowsAffected;
+
+	if RowsAffected != 1 and RowsAffected != 0
+	then
+		signal sqlstate '45000'
+		set message_text = 'sp_delete_tdomdef() Expected to affect 1 tdomdef',
+			schema_name = 'cfinet213',
+			table_name = 'tdomdef';
+	end if;
+
+end;////

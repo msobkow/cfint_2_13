@@ -1,0 +1,178 @@
+--
+--	@(#) dbcreate/cfint/mssql/crsp_update_sprjdef.tsql
+--
+--	org.msscf.msscf.CFInt
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFInt 2.13 Internet Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+
+use cfinet213
+go
+
+create proc sp_update_sprjdef
+	@argAuditClusterId bigint,
+	@argAuditUserId varchar(36),
+	@argAuditSessionId varchar(36),
+	@secClusterId bigint,
+	@secTenantId bigint,
+	@argClassCode CFINet213ClassCode,
+	@argTenantId decimal(21,0),
+	@argId decimal(21,0),
+	@argTopProjectId decimal(21,0),
+	@argName varchar(64),
+	@argDescription varchar(1024),
+	@argRevision integer
+as
+	declare @oldRevision int
+	declare @oldTenantId decimal(21,0)
+	declare @oldAuditCreatedAt datetime2
+	declare @oldAuditCreatedBy varchar(36)
+	declare @oldAuditUpdatedAt datetime2
+	declare @oldAuditUpdatedBy varchar(36)
+	declare @permissionFlag int
+begin
+
+	if( @argClassCode = 'a105' )
+	begin
+		exec sp_is_tenant_user @permissionFlag output, @argTenantId, 'UpdateSubProject', @argAuditUserId
+		if( @permissionFlag = 0 )
+		begin
+			raiserror( 'Permission denied -- User not found in tenant TSecGroup for UpdateSubProject',
+				15,
+				1 )
+		end
+	end
+
+	update cfinet213..sprjdef
+	set forcesynclock = forcesynclock + 1
+	where
+			tenantid = @argTenantId
+		and id = @argId
+	if @@rowcount != 1
+	begin
+		raiserror( 'Data collision detected -- primary key does not exist',
+			15,
+			1 )
+	end
+
+	select
+		@oldTenantId = a105.tenantid,
+		@oldRevision = a105.revision
+	from cfinet213..sprjdef as a105
+	where
+			a105.tenantid = @argTenantId
+			and a105.id = @argId
+
+	if @argRevision != @oldRevision
+	begin
+		raiserror( 'sp_update_sprjdef() Data collision detected',
+			15,
+			1 )
+	end
+
+
+	if( @argClassCode = 'a105' )
+	begin
+		if( @argTenantId != @oldTenantId )
+		begin
+			raiserror( 'Permission denied -- TenantId cannot be updated for SubProject',
+				15,
+				1 )
+		end
+	end
+
+	update cfinet213..sprjdef
+	set
+		revision = @argRevision + 1,
+		topprojectid = @argTopProjectId,
+		safe_name = @argName,
+		descr = @argDescription
+	where
+		tenantid = @argTenantId
+		and id = @argId
+		and revision = @argRevision
+
+	if @@rowcount != 1
+	begin
+		raiserror( 'sp_update_sprjdef() Data collision detected',
+			15,
+			1 )
+	end
+
+	insert into cfinet213..sprjdef_h (
+			tenantid,
+			id,
+			auditclusterid,
+			auditsessionid,
+			auditstamp,
+			topprojectid,
+			safe_name,
+			descr,
+			revision,
+			auditaction )
+		select
+			a105.tenantid,
+			a105.id,
+			@argAuditClusterId,
+			@argAuditSessionId,
+			sysdatetime(),
+			a105.topprojectid,
+			a105.safe_name,
+			a105.descr,
+			a105.revision,
+			1
+		from cfinet213..sprjdef as a105
+		where
+			a105.tenantid = @argTenantId
+			and a105.id = @argId
+
+	select
+			a105.createdby,
+			convert( varchar, a105.createdat, 120 ) as createdat,
+			a105.updatedby,
+			convert( varchar, a105.updatedat, 120 ) as updatedat,
+			a105.tenantid as tenantid,
+			a105.id as id,
+			a105.topprojectid as topprojectid,
+			a105.safe_name as safe_name,
+			a105.descr as descr,
+		a105.revision as revision
+	from cfinet213..sprjdef as a105
+	where
+		a105.tenantid = @argTenantId
+			and a105.id = @argId
+end
+go
+
+
+quit

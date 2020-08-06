@@ -1,0 +1,285 @@
+--
+--	@(#) dbcreate/cfint/mssql/drdb_types.tsql
+--
+--	org.msscf.msscf.CFInt
+--
+--	Copyright (c) 2020 Mark Stephen Sobkow
+--	
+--	MSS Code Factory CFInt 2.13 Internet Essentials
+--	
+--	Copyright 2020 Mark Stephen Sobkow
+--	
+--		This file is part of MSS Code Factory.
+--	
+--		MSS Code Factory is available under dual commercial license from Mark Stephen
+--		Sobkow, or under the terms of the GNU General Public License, Version 3
+--		or later.
+--	
+--	    MSS Code Factory is free software: you can redistribute it and/or modify
+--	    it under the terms of the GNU General Public License as published by
+--	    the Free Software Foundation, either version 3 of the License, or
+--	    (at your option) any later version.
+--	
+--	    MSS Code Factory is distributed in the hope that it will be useful,
+--	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+--	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--	    GNU General Public License for more details.
+--	
+--	    You should have received a copy of the GNU General Public License
+--	    along with MSS Code Factory.  If not, see <https://www.gnu.org/licenses/>.
+--	
+--	Donations to support MSS Code Factory can be made at
+--	https://www.paypal.com/paypalme2/MarkSobkow
+--	
+--	Please contact Mark Stephen Sobkow at msobkow@sasktel.net for commercial licensing.
+--
+--	Manufactured by MSS Code Factory 2.12
+--
+use cfinet213
+go
+
+if exists ( select * from systypes where name = 'OmxClassCode' )
+begin
+	exec sp_droptype OmxClassCode
+end
+if exists ( select * from systypes where name = 'cfinet213ClassCode' )
+begin
+	exec sp_droptype cfinet213ClassCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213AuditActionEnum' )
+begin
+	exec sp_droptype CFINet213AuditActionEnum
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ClusterIdGenSeq' )
+begin
+	exec sp_droptype CFINet213ClusterIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213DeviceName' )
+begin
+	exec sp_droptype CFINet213DeviceName
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ISO6391LangCode' )
+begin
+	exec sp_droptype CFINet213ISO6391LangCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ISO6392LangCode' )
+begin
+	exec sp_droptype CFINet213ISO6392LangCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ISOCcyCode' )
+begin
+	exec sp_droptype CFINet213ISOCcyCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ISOCcyIdGenSeq' )
+begin
+	exec sp_droptype CFINet213ISOCcyIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ISOCtryCode' )
+begin
+	exec sp_droptype CFINet213ISOCtryCode
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ISOCtryCode3' )
+begin
+	exec sp_droptype CFINet213ISOCtryCode3
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ISOCtryIdGenSeq' )
+begin
+	exec sp_droptype CFINet213ISOCtryIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ISOLangIdGenSeq' )
+begin
+	exec sp_droptype CFINet213ISOLangIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ISOTZoneIdGenSeq' )
+begin
+	exec sp_droptype CFINet213ISOTZoneIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SHA512HexHash' )
+begin
+	exec sp_droptype CFINet213SHA512HexHash
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SecSessionIdGen' )
+begin
+	exec sp_droptype CFINet213SecSessionIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SecUserIdGen' )
+begin
+	exec sp_droptype CFINet213SecUserIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ServiceTypeIdGenSeq' )
+begin
+	exec sp_droptype CFINet213ServiceTypeIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213TenantIdGenSeq' )
+begin
+	exec sp_droptype CFINet213TenantIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213HostNodeIdGen' )
+begin
+	exec sp_droptype CFINet213HostNodeIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SecAppIdGen' )
+begin
+	exec sp_droptype CFINet213SecAppIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SecFormIdGen' )
+begin
+	exec sp_droptype CFINet213SecFormIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SecGroupFormIdGen' )
+begin
+	exec sp_droptype CFINet213SecGroupFormIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SecGroupIdGen' )
+begin
+	exec sp_droptype CFINet213SecGroupIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SecGrpIncIdGen' )
+begin
+	exec sp_droptype CFINet213SecGrpIncIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SecGrpMembIdGen' )
+begin
+	exec sp_droptype CFINet213SecGrpMembIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213ServiceIdGen' )
+begin
+	exec sp_droptype CFINet213ServiceIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213TSecGroupIdGen' )
+begin
+	exec sp_droptype CFINet213TSecGroupIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213TSecGrpIncIdGen' )
+begin
+	exec sp_droptype CFINet213TSecGrpIncIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213TSecGrpMembIdGen' )
+begin
+	exec sp_droptype CFINet213TSecGrpMembIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213DomNameType' )
+begin
+	exec sp_droptype CFINet213DomNameType
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213DomainDescrType' )
+begin
+	exec sp_droptype CFINet213DomainDescrType
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213LicenseIdGen' )
+begin
+	exec sp_droptype CFINet213LicenseIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213MajorVersionIdGen' )
+begin
+	exec sp_droptype CFINet213MajorVersionIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213MimeTypeIdGenSeq' )
+begin
+	exec sp_droptype CFINet213MimeTypeIdGenSeq
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213MinorVersionIdGen' )
+begin
+	exec sp_droptype CFINet213MinorVersionIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213SubProjectIdGen' )
+begin
+	exec sp_droptype CFINet213SubProjectIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213TldIdGen' )
+begin
+	exec sp_droptype CFINet213TldIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213TopDomainIdGen' )
+begin
+	exec sp_droptype CFINet213TopDomainIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213TopProjectIdGen' )
+begin
+	exec sp_droptype CFINet213TopProjectIdGen
+end
+go
+
+if exists ( select * from systypes where name = 'CFINet213URLProtoIdGenSeq' )
+begin
+	exec sp_droptype CFINet213URLProtoIdGenSeq
+end
+go
+
+quit
